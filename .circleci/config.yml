@@ -25,29 +25,9 @@ jobs:
         name: List npm installed packages
         command: npm ls || true
 
-    - persist_to_workspace:
-        # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is
-        # taken to be the root directory of the workspace.
-        root: /tmp/
-        # Must be relative path from root
-        paths:
-          - packagr-web
-
-
-  deploy:
-    docker:
-      - image: circleci/node:12.3.1
-    working_directory: /tmp/packagr-web
-
-    steps:
-    - attach_workspace:
-        # Must be absolute path or relative path from working_directory
-        at: /tmp/packagr-web/
-    - deploy:
-        name: "Deploy to GH-Pages"
+    - run:
+        name: Generate Static Site
         command: |
-          pwd
-          ls -alt
 
           if [ "${CIRCLE_BRANCH}" == "master" ]; then
             npm run-script ng --  build --output-path ../dist --base-href "/" --sourcemap --prod
@@ -57,13 +37,35 @@ jobs:
           fi
           cp ../dist/angular.html ../dist/404.html
 
+    - persist_to_workspace:
+        # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is
+        # taken to be the root directory of the workspace.
+        root: /tmp/
+        # Must be relative path from root
+        paths:
+          - dist
+
+
+  deploy:
+    docker:
+      - image: circleci/node:12.3.1
+    working_directory: /tmp/
+
+    steps:
+    - attach_workspace:
+        # Must be absolute path or relative path from working_directory
+        at: /tmp/dist/
+    - deploy:
+        name: "Deploy to GH-Pages"
+        command: |
+          cd /tmp/dist
+          
           mkdir -p ~/.ssh
           ssh-keyscan -H github.com >> ~/.ssh/known_hosts
 
           git config --global user.email circleci@circleci
           git config --global user.name CircleCI
 
-          cd ../dist
           git init
           git checkout -b gh-pages
           git add -A
