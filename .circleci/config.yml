@@ -46,6 +46,9 @@ jobs:
     - deploy:
         name: "Deploy to GH-Pages"
         command: |
+          pwd
+          ls -alt
+
           if [ "${CIRCLE_BRANCH}" == "master" ]; then
             npm run-script ng --  build --output-path ../dist --base-href "/" --sourcemap --prod
             echo "www.packagr.io" > ../dist/CNAME
