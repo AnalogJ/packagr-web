@@ -3,7 +3,7 @@ jobs:
   build:
     # The primary container is an instance of the first image listed. The job's commands run in this container.
     docker:
-    - image: circleci/node:8.12
+    - image: circleci/node:12.3.1
     working_directory: /tmp/packagr-web
     steps:
     - checkout
@@ -47,10 +47,10 @@ jobs:
         name: "Deploy to GH-Pages"
         command: |
           if [ "${CIRCLE_BRANCH}" == "master" ]; then
-            ng build --output-path ../dist --base-href "/" --sourcemap --prod
+            npm run-script ng --  build --output-path ../dist --base-href "/" --sourcemap --prod
             echo "www.packagr.io" > ../dist/CNAME
           else
-            ng build --output-path ../dist --base-href "/" --dev
+            npm run-script ng --  build --output-path ../dist --base-href "/" --dev
           fi
           cp ../dist/angular.html ../dist/404.html
 
