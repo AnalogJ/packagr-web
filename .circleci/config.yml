@@ -4,7 +4,7 @@ jobs:
     # The primary container is an instance of the first image listed. The job's commands run in this container.
     docker:
     - image: circleci/node:12.3.1
-    working_directory: /tmp/packagr-web
+    working_directory: /tmp/packagr-web/
     steps:
     - checkout
     - run:
@@ -31,18 +31,18 @@ jobs:
         root: /tmp/
         # Must be relative path from root
         paths:
-          - packagr-web
+          - packagr-web/*
 
 
   deploy:
     docker:
       - image: circleci/node:12.3.1
-    working_directory: /tmp/packagr-web
+    working_directory: /tmp/packagr-web/
 
     steps:
     - attach_workspace:
         # Must be absolute path or relative path from working_directory
-        at: /tmp/packagr-web
+        at: /tmp/packagr-web/
     - deploy:
         name: "Deploy to GH-Pages"
         command: |
