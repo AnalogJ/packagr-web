@@ -30,7 +30,7 @@ jobs:
         command: |
 
           if [ "${CIRCLE_BRANCH}" == "master" ]; then
-            npm run-script ng --  build --output-path ../dist --base-href "/" --sourcemap --prod
+            npm run-script ng --  build --output-path ../dist --base-href "/" --source-map --prod
             echo "www.packagr.io" > ../dist/CNAME
           else
             npm run-script ng --  build --output-path ../dist --base-href "/" --dev
@@ -54,12 +54,12 @@ jobs:
     steps:
     - attach_workspace:
         # Must be absolute path or relative path from working_directory
-        at: /tmp/dist/
+        at: /tmp/
     - deploy:
         name: "Deploy to GH-Pages"
         command: |
           cd /tmp/dist
-          
+
           mkdir -p ~/.ssh
           ssh-keyscan -H github.com >> ~/.ssh/known_hosts
 
