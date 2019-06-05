@@ -1,0 +1,86 @@
+version: 2
+jobs:
+  build:
+    # The primary container is an instance of the first image listed. The job's commands run in this container.
+    docker:
+    - image: circleci/node:8.12
+    working_directory: /tmp/packagr-web
+    steps:
+    - checkout
+    - run:
+        name: Global NPM packages
+        command: |
+          npm install npm@latest
+          npm install @angular/cli@latest
+    - restore_cache:
+        key: dependency-cache-{{ checksum "package.json" }}
+    - run:
+        name: Install npm
+        command: npm install
+    - save_cache:
+        key: dependency-cache-{{ checksum "package.json" }}
+        paths:
+          - node_modules
+    - run:
+        name: List npm installed packages
+        command: npm ls || true
+
+    - persist_to_workspace:
+        # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is
+        # taken to be the root directory of the workspace.
+        root: /tmp/
+        # Must be relative path from root
+        paths:
+          - packagr-web
+
+
+  deploy:
+    docker:
+      - image: circleci/node:12.3.1
+    working_directory: /tmp/packagr-web
+
+    steps:
+    - attach_workspace:
+        # Must be absolute path or relative path from working_directory
+        at: /tmp/packagr-web
+    - deploy:
+        name: "Deploy to GH-Pages"
+        command: |
+          if [ "${CIRCLE_BRANCH}" == "master" ]; then
+            ng build --output-path ../dist --base-href "/" --sourcemap --prod
+            echo "www.packagr.io" > ../dist/CNAME
+          else
+            ng build --output-path ../dist --base-href "/" --dev
+          fi
+          cp ../dist/angular.html ../dist/404.html
+
+          mkdir -p ~/.ssh
+          ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+
+          git config --global user.email circleci@circleci
+          git config --global user.name CircleCI
+
+          cd ../dist
+          git init
+          git checkout -b gh-pages
+          git add -A
+          git commit -m "Automated deployment to GitHub Pages: ${CIRCLE_SHA1}" --allow-empty
+
+          if [ "${CIRCLE_BRANCH}" == "master" ]; then
+            git remote add origin git@github.com:AnalogJ/packagr-web.git
+            git push --force origin gh-pages:gh-pages
+          fi
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - beta
+                - master
