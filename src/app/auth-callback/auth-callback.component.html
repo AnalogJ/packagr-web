@@ -1,3 +1,21 @@
-<p>
-  auth-callback works!
-</p>
+<div class="full-page-bg-wrapper">
+  <div class="full-page-bg"></div>
+</div>
+<!-- Large modal -->
+
+<div bsModal #childModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content" style="border-radius:0px;">
+
+      <div class="modal-body" style="padding: 80px">
+        <div class="page-tagline">
+          <h2 class="title" *ngIf="successfulCallback">Success</h2>
+          <h2 class="title" *ngIf="!successfulCallback">Failure</h2>
+          <div class="description">
+            You have successfully connected your account. Please wait while we redirect you.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -63,23 +63,21 @@ export class ApiService {
     return this.http.get(`${AppSettings.API_ENDPOINT}/connect/${serviceType}`)
       .pipe(catchError(this.handleError));
   }
-  //
-  // authCallback(serviceType, queryParams): Observable<any> {
-  //   let params: URLSearchParams = new URLSearchParams();
-  //
-  //     for(var key in queryParams){
-  //       var value = queryParams[key];
-  //     params.set(key, value)
-  //     }
-  //     console.log(params);
-  //
-  //   return this.http.get(`${AppSettings.API_ENDPOINT}/callback/${serviceType}`, {
-  //     search: params
-  //   })
-  //       .map(this.extractData)
-  //       .catch(this.handleError);
-  // }
-  //
+
+  authCallback(serviceType, queryParams): Observable<any> {
+    const params: URLSearchParams = new URLSearchParams();
+
+    for (let [key, value] of queryParams) {
+      params.set(key, value);
+    }
+    console.log(params);
+
+    return this.http.get(`${AppSettings.API_ENDPOINT}/callback/${serviceType}`, {
+      search: params
+    })
+      .pipe(catchError(this.handleError));
+  }
+
   //
   // fetchDockerImage(dockerImage): Observable<any>{
   //   let params: URLSearchParams = new URLSearchParams();
