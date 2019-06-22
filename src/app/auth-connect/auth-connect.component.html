@@ -12,8 +12,8 @@
             <p>If you have already authorized either GitHub or Bitbucket on your Packagr account, then you can click either button to sign in.</p>
           </div>
 
-          <button class="button button-github"><span><fa-icon [icon]="['fab', 'github']"></fa-icon> Github</span></button>
-          <button class="button button-playstation"><span><fa-icon [icon]="['fab', 'bitbucket']"></fa-icon> BitBucket</span></button>
+          <button (click)="loginWith('gh')" class="button button-github"><span><fa-icon [icon]="['fab', 'github']"></fa-icon> Github</span></button>
+          <button (click)="loginWith('bb')" class="button button-playstation"><span><fa-icon [icon]="['fab', 'bitbucket']"></fa-icon> BitBucket</span></button>
 
         </div>
       </div>
