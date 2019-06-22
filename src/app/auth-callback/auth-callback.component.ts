@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { ActivatedRoute } from '@angular/router';
-import {Router} from '@angular/router'
+import {Router, Params} from '@angular/router'
 
 @Component({
   selector: 'app-auth-callback',
@@ -21,7 +21,13 @@ export class AuthCallbackComponent implements OnInit {
     console.log(this.activatedRoute.snapshot.paramMap);
     console.log(this.activatedRoute.snapshot.queryParamMap);
 
-    this.apiService.authCallback(this.activatedRoute.snapshot.params.serviceType, this.activatedRoute.snapshot.queryParamMap)
+    const queryParams = {}
+    this.activatedRoute.snapshot.queryParamMap.keys.forEach((key: string) => {
+      console.log('PARAM', key, this.activatedRoute.snapshot.queryParamMap.get(key));
+      queryParams[key] = this.activatedRoute.snapshot.queryParamMap.get(key);
+    })
+
+    this.apiService.authCallback(this.activatedRoute.snapshot.params.serviceType, queryParams)
       .subscribe(
         data => {
           console.log(data);

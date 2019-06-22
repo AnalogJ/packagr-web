@@ -68,8 +68,8 @@ export class ApiService {
 
     const params: HttpParams = new HttpParams();
 
-    for (let [key, value] of queryParams) {
-      params.set(key, value);
+    for (let [key, value] of Object.entries(queryParams)) {
+      params.set(key, value as string);
     }
     console.log(params);
 
