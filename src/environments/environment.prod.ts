@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  apiVersion: 'v1',
+  wrongFile: 'readme'
 };
