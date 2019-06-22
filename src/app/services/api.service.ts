@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {AppSettings} from '../app-settings';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
@@ -65,7 +65,8 @@ export class ApiService {
   }
 
   authCallback(serviceType, queryParams): Observable<any> {
-    const params: URLSearchParams = new URLSearchParams();
+
+    const params: HttpParams = new HttpParams();
 
     for (let [key, value] of queryParams) {
       params.set(key, value);
@@ -73,7 +74,7 @@ export class ApiService {
     console.log(params);
 
     return this.http.get(`${AppSettings.API_ENDPOINT}/callback/${serviceType}`, {
-      search: params
+      params
     })
       .pipe(catchError(this.handleError));
   }
