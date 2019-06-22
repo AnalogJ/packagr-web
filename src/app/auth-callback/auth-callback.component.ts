@@ -18,10 +18,10 @@ export class AuthCallbackComponent implements OnInit {
 
     // process the query string for the code
     console.log('GETTING QUERY STRING PARAMS');
-    console.log(this.activatedRoute.snapshot.params);
-    console.log(this.activatedRoute.snapshot.queryParams);
+    console.log(this.activatedRoute.snapshot.paramMap);
+    console.log(this.activatedRoute.snapshot.queryParamMap);
 
-    this.apiService.authCallback(this.activatedRoute.snapshot.params.serviceType, this.activatedRoute.snapshot.queryParams)
+    this.apiService.authCallback(this.activatedRoute.snapshot.params.serviceType, this.activatedRoute.snapshot.queryParamMap)
       .subscribe(
         data => {
           console.log(data);
