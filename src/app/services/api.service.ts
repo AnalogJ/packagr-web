@@ -66,15 +66,16 @@ export class ApiService {
 
   authCallback(serviceType, queryParams): Observable<any> {
 
-    const params: HttpParams = new HttpParams();
-
-    for (let [key, value] of Object.entries(queryParams)) {
-      params.set(key, value as string);
-    }
-    console.log(params);
+    // const params: HttpParams = new HttpParams();
+    //
+    // for (let [key, value] of Object.entries(queryParams)) {
+    //   console.log("key:", key, "value:", value)
+    //   params.set(key, value as string);
+    // }
+    // console.log("API PARAMS", params);
 
     return this.http.get(`${AppSettings.API_ENDPOINT}/callback/${serviceType}`, {
-      params
+      params: queryParams
     })
       .pipe(catchError(this.handleError));
   }
