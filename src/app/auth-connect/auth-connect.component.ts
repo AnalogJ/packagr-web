@@ -18,7 +18,7 @@ export class AuthConnectComponent implements OnInit {
   ngOnInit() {
   }
 
-  loginWith(serviceType){
+  loginWith(serviceType) {
     console.log(serviceType);
     this.loading[serviceType] = true;
 

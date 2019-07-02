@@ -16,6 +16,10 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 
+
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+
+
 export function getToken() {
   return localStorage.getItem('access_token');
 }
@@ -40,7 +44,9 @@ export function getToken() {
         whitelistedDomains: ['packagr.io', 'beta.packagr.io'],
         blacklistedRoutes: []
       }
-    })
+    }),
+    BsDropdownModule.forRoot()
+
 
   ],
   providers: [

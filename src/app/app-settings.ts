@@ -1,6 +1,6 @@
 import { environment } from '../environments/environment';
 export class AppSettings {
-    public static get API_ENDPOINT(): string { return 'https://api.packagr.io/' + environment.apiVersion; }
+    public static get API_ENDPOINT(): string { return environment.apiEndpoint; }
     //
 
     public static get DOCKER_IMAGES(): any {
@@ -8,7 +8,7 @@ export class AppSettings {
             generic: {
                 display: 'Generic',
                 image: 'analogj/capsulecd',
-                recommendedSecrets:[]
+                recommendedSecrets: []
             },
             chef: {
                 display: 'Chef',

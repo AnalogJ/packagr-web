@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiVersion: 'v1',
+  apiEndpoint: 'https://api.packagr.io/v1',
   wrongFile: 'readme'
 };

@@ -9,6 +9,7 @@ ENV PATH /app/node_modules/.bin:$PATH
 
 # install and cache app dependencies
 COPY package.json /app/package.json
+COPY package-lock.json /app/package-lock.json
 RUN npm install
 RUN npm install -g @angular/cli@latest
 
@@ -16,4 +17,4 @@ RUN npm install -g @angular/cli@latest
 COPY . /app
 
 # start app
-CMD ng serve --host 0.0.0.0
+CMD ng serve --host 0.0.0.0 --configuration local --port 4000

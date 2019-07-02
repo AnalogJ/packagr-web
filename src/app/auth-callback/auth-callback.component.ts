@@ -32,7 +32,7 @@ export class AuthCallbackComponent implements OnInit {
         data => {
           console.log(data);
           localStorage.setItem('id_token', data.token); // set the JWT token
-          localStorage.setItem('service_type', data.service_type);
+          localStorage.setItem('serviceType', data.serviceType);
 
           this.router.navigate(['/dashboard']);
         },

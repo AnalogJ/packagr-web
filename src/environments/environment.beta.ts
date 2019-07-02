@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiVersion: 'beta'
+  apiEndpoint: 'https://api.packagr.io/beta'
 };
 
 /*
