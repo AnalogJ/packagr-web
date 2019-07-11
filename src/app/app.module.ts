@@ -18,10 +18,16 @@ import { fab } from '@fortawesome/free-brands-svg-icons';
 
 
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { ProjectCreateComponent } from './project-create/project-create.component';
+import { ProjectEditComponent } from './project-edit/project-edit.component';
+import { ProjectDeployComponent } from './project-deploy/project-deploy.component';
+import { HeaderComponent } from './partials/header/header.component';
+import { LeftMenuComponent } from './partials/left-menu/left-menu.component';
+import { FooterComponent } from './partials/footer/footer.component';
 
 
 export function getToken() {
-  return localStorage.getItem('access_token');
+  return localStorage.getItem('id_token');
 }
 
 
@@ -30,7 +36,13 @@ export function getToken() {
     AppComponent,
     AuthConnectComponent,
     AuthCallbackComponent,
-    DashboardComponent
+    DashboardComponent,
+    ProjectCreateComponent,
+    ProjectEditComponent,
+    ProjectDeployComponent,
+    HeaderComponent,
+    LeftMenuComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
@@ -41,8 +53,10 @@ export function getToken() {
       config: {
         tokenGetter: getToken,
         authScheme: 'JWT ',
-        whitelistedDomains: ['packagr.io', 'beta.packagr.io'],
-        blacklistedRoutes: []
+        whitelistedDomains: ['packagr.io', 'beta.packagr.io', 'localhost:4000', 'localhost:3000'],
+        blacklistedRoutes: [],
+        throwNoTokenError: true,
+        skipWhenExpired: true
       }
     }),
     BsDropdownModule.forRoot()

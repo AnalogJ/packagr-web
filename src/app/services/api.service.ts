@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {AppSettings} from '../app-settings';
-import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
@@ -51,13 +51,13 @@ export class ApiService {
   // Unauthenticated functions
 
   loggedIn() {
-    return this.jwtHelper.isTokenExpired();
+    // naiive solution: if token is expired, then we're not "logged in".
+    return !this.jwtHelper.isTokenExpired();
   }
 
-  // serviceType(): string{
-  //   return localStorage.getItem('service_type')
-  //
-  // }
+  serviceType(): string {
+    return localStorage.getItem('serviceType');
+  }
 
   authConnect(serviceType): Observable<any> {
     return this.http.get(`${AppSettings.API_ENDPOINT}/connect/${serviceType}`)
@@ -146,28 +146,47 @@ export class ApiService {
   //       .catch(this.handleError);
   // }
   //
-  // fetchOrgs(page?:number): Observable<any>{
-  //   let params: URLSearchParams = new URLSearchParams();
-  //   params.set('page', (page || 0).toString());
-  //   var url = `${AppSettings.API_ENDPOINT}/fetch/${this.serviceType()}/orgs`;
+  fetchUser(): Observable<any> {
+    const params = new HttpParams();
+    const url = `${AppSettings.API_ENDPOINT}/fetch/${this.serviceType()}/user`;
+
+    return this.http.get(url)
+      .pipe(catchError(this.handleError));
+
+    // var cacheKey = this.cacheKey('GET', url, params);
+    // return this.cacheService.get(cacheKey) || this.cacheService.put(cacheKey, this.authHttp.get(url,{ search: params })
+    //         .map(this.extractData)
+    //         .catch(this.handleError))
+  }
+
+  fetchOrgs(page?: number): Observable<any> {
+    const params = new HttpParams();
+    params.set('page', (page || 0).toString());
+    const url = `${AppSettings.API_ENDPOINT}/fetch/${this.serviceType()}/orgs`;
+
+    return this.http.get(url, { params })
+      .pipe(catchError(this.handleError));
+
+    // var cacheKey = this.cacheKey('GET', url, params);
+    // return this.cacheService.get(cacheKey) || this.cacheService.put(cacheKey, this.authHttp.get(url,{ search: params })
+    //         .map(this.extractData)
+    //         .catch(this.handleError))
+  }
   //
-  //   var cacheKey = this.cacheKey('GET', url, params);
-  //   return this.cacheService.get(cacheKey) || this.cacheService.put(cacheKey, this.authHttp.get(url,{ search: params })
-  //           .map(this.extractData)
-  //           .catch(this.handleError))
-  // }
-  //
-  // fetchOrgRepos(orgId:string, page?:number): Observable<any>{
-  //   let params: URLSearchParams = new URLSearchParams();
-  //   params.set('page', (page || 0).toString());
-  //   var url = `${AppSettings.API_ENDPOINT}/fetch/${this.serviceType()}/orgs/${orgId}/repos`;
-  //
-  //   var cacheKey = this.cacheKey('GET', url, params);
-  //   return this.cacheService.get(cacheKey) || this.cacheService.put(cacheKey, this.authHttp.get(url,{ search: params })
-  //             .map(this.extractData)
-  //             .catch(this.handleError))
-  //
-  // }
+  fetchOrgRepos(orgInfo, page?: number): Observable<any> {
+    const params = orgInfo
+    if (page) {
+      orgInfo.page = (page || 0).toString();
+    }
+
+    const url = `${AppSettings.API_ENDPOINT}/fetch/${this.serviceType()}/repos`;
+
+    return this.http.get(url, {
+      params
+    })
+      .pipe(catchError(this.handleError));
+
+  }
   //
   // fetchOrgRepoPullRequests(orgId:string, repoId:string, page?:number): Observable<any>{
   //   let params: URLSearchParams = new URLSearchParams();
