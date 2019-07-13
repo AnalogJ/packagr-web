@@ -1,10 +1,14 @@
 export class Repository {
-  owner: string;
+  id: string;
+  slug: string;
   name: string;
   description: string;
+
+  org: string;
+  orgId: string;
+
   private: boolean;
   language: string;
-  repoId: string;
   link: string;
   defaultBranch: string;
   updatedAt: string;

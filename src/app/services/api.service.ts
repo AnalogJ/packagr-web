@@ -4,6 +4,10 @@ import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/c
 import { JwtHelperService } from '@auth0/angular-jwt';
 import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
+import {Organization} from '../models/organization';
+import {Repository} from '../models/repository';
+import {User} from '../models/user';
+import {Project} from '../models/project';
 
 @Injectable()
 export class ApiService {
@@ -97,13 +101,18 @@ export class ApiService {
   //
   // // Authenticated functions
   //
-  // getProjects(): Observable<any> {
-  //   var url = `${AppSettings.API_ENDPOINT}/project`;
-  //   var cacheKey = this.cacheKey('GET', url);
-  //   return this.cacheService.get(cacheKey) || this.cacheService.put(cacheKey, this.authHttp.get(url)
-  //         .map(this.extractData)
-  //         .catch(this.handleError))
-  // }
+  getProjects(): Observable<Project[]> {
+    // var url = `${AppSettings.API_ENDPOINT}/project`;
+    // var cacheKey = this.cacheKey('GET', url);
+    // return this.cacheService.get(cacheKey) || this.cacheService.put(cacheKey, this.authHttp.get(url)
+    //       .map(this.extractData)
+    //       .catch(this.handleError))
+    const params = new HttpParams();
+    const url = `${AppSettings.API_ENDPOINT}/fetch/${this.serviceType()}/user`;
+
+    return this.http.get<Project[]>(url)
+      .pipe(catchError(this.handleError));
+  }
   //
   // getProject(orgId:string, repoId:string): Observable<any> {
   //   var url = `${AppSettings.API_ENDPOINT}/project/${this.serviceType()}/${orgId}/${repoId}`;
@@ -113,11 +122,12 @@ export class ApiService {
   //         .catch(this.handleError))
   // }
   //
-  // createProject(orgId:string, repoId:string){
-  //   return this.authHttp.post(`${AppSettings.API_ENDPOINT}/project/${this.serviceType()}/${orgId}/${repoId}`, {})
-  //       .map(this.extractData)
-  //       .catch(this.handleError);
-  // }
+  createProject(org, repo, queryParams) {
+    return this.http.post(`${AppSettings.API_ENDPOINT}/project/${this.serviceType()}/${org}/${repo}`, {},
+       { params: queryParams })
+      .pipe(catchError(this.handleError));
+
+  }
   // editProject(orgId:string, repoId:string, payload: any): Observable<any> {
   //   return this.authHttp.put(`${AppSettings.API_ENDPOINT}/project/${this.serviceType()}/${orgId}/${repoId}`, payload)
   //       .map(this.extractData)
@@ -146,11 +156,11 @@ export class ApiService {
   //       .catch(this.handleError);
   // }
   //
-  fetchUser(): Observable<any> {
+  fetchUser(): Observable<User> {
     const params = new HttpParams();
     const url = `${AppSettings.API_ENDPOINT}/fetch/${this.serviceType()}/user`;
 
-    return this.http.get(url)
+    return this.http.get<User>(url)
       .pipe(catchError(this.handleError));
 
     // var cacheKey = this.cacheKey('GET', url, params);
@@ -159,12 +169,12 @@ export class ApiService {
     //         .catch(this.handleError))
   }
 
-  fetchOrgs(page?: number): Observable<any> {
+  fetchOrgs(page?: number): Observable<Organization[]> {
     const params = new HttpParams();
     params.set('page', (page || 0).toString());
     const url = `${AppSettings.API_ENDPOINT}/fetch/${this.serviceType()}/orgs`;
 
-    return this.http.get(url, { params })
+    return this.http.get<Organization[]>(url, { params })
       .pipe(catchError(this.handleError));
 
     // var cacheKey = this.cacheKey('GET', url, params);
@@ -173,15 +183,14 @@ export class ApiService {
     //         .catch(this.handleError))
   }
   //
-  fetchOrgRepos(orgInfo, page?: number): Observable<any> {
-    const params = orgInfo
+  fetchOrgRepos(params, page?: number): Observable<Repository[]> {
     if (page) {
-      orgInfo.page = (page || 0).toString();
+      params.page = (page || 0).toString();
     }
 
     const url = `${AppSettings.API_ENDPOINT}/fetch/${this.serviceType()}/repos`;
 
-    return this.http.get(url, {
+    return this.http.get<Repository[]>(url, {
       params
     })
       .pipe(catchError(this.handleError));
@@ -207,5 +216,7 @@ export class ApiService {
   //         .map(this.extractData)
   //         .catch(this.handleError))
   // }
+
+
 
 }

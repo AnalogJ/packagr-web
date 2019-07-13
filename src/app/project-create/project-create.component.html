@@ -22,13 +22,13 @@
     <div class="col-12 mb-30">
       <div class="alert alert-primary">
         <button class="close" data-dismiss="alert"><i class="zmdi zmdi-close"></i></button>
-        <i class="zmdi zmdi-alert-polygon"></i> This is a list of all repos under the {{activeOrg.name}} account that can be configured for use with Packagr. You must admin access to the repository. <a href="#" class="alert-link">download.</a>
+        <i class="zmdi zmdi-alert-polygon"></i> This is a list of all repos under the {{activeOrg.name}} account that can be configured for use with Packagr. <a [href]="activeOrg.installationUrl" class="alert-link">Configure</a>
       </div>
     </div>
     <!--Alert End-->
 
     <!-- Invoice List Start -->
-    <div class="col-12 mb-30">
+    <div class="col-12 mb-30">s
       <div class="table-responsive">
         <table class="table table-bordered mb-0">
 
@@ -48,7 +48,7 @@
           <!-- Table Body Start -->
           <tbody>
           <tr *ngFor="let repo of repos"s>
-            <td>{{repo.owner}}</td>
+            <td>{{repo.org}}</td>
             <td>{{repo.name}}</td>
             <td>{{repo.description}}</td>
             <td>{{repo.updatedAt}}</td>
@@ -56,11 +56,11 @@
             <td>{{repo.private}}</td>
             <td >
               <div class="table-action-buttons">
-                <!-- setup a new project -->
-                <!-- edit an existing project -->
-                <a class="view button button-box button-xs button-primary" href="invoice-details.html"><i class="zmdi zmdi-more"></i></a>
-                <a class="edit button button-box button-xs button-info" href="#"><i class="zmdi zmdi-edit"></i></a>
-                <a class="delete button button-box button-xs button-danger" href="#"><i class="zmdi zmdi-delete"></i></a>
+                <!-- new project buttons-->
+                <a class="create button button-box button-xs button-primary"  (click)="createProject(repo)"><i class="zmdi zmdi-more"></i></a>
+
+                <!-- existing project buttons -->
+                <a class="edit button button-box button-xs button-info"  (click)="editProject(repo)"><i class="zmdi zmdi-edit"></i></a>
               </div>
             </td>
           </tr>

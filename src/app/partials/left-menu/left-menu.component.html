@@ -5,8 +5,8 @@
 
   <nav class="side-header-menu" id="side-header-menu">
     <ul>
-      <li><a [routerLink]="'gh/AnalogJ'"><i class="ti-home"></i> <span>Dashboard</span></a></li>
-      <li><a [routerLink]="'gh/AnalogJ/create'"><i class="ti-palette"></i> <span>Add Project</span></a></li>
+      <li><a [routerLink]="'/gh/' + activeOrg.name"><i class="ti-home"></i> <span>Dashboard</span></a></li>
+      <li><a [routerLink]="'/gh/' + activeOrg.name + '/create'"><i class="ti-palette"></i> <span>Add Project</span></a></li>
 
     </ul>
   </nav>

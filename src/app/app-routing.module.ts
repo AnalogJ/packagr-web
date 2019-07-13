@@ -14,12 +14,12 @@ const routes: Routes = [
   { path: 'auth/callback/:serviceType', component: AuthCallbackComponent },
 
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
-  { path: ':serviceType/:orgId', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: ':serviceType/:org', component: DashboardComponent, canActivate: [AuthGuard] },
 
-  { path: ':serviceType/:orgId/create', component: ProjectCreateComponent, canActivate: [AuthGuard] },
-  { path: ':serviceType/:orgId/:repoId/edit', component: ProjectEditComponent, canActivate: [AuthGuard] },
-  { path: ':serviceType/:orgId/:repoId/pr/:prNumber', component: ProjectDeployComponent, canActivate: [AuthGuard] },
-  // { path: ':serviceType/:orgId/:repoId/pr/:prNumber/job', component: ProjectDeployLogsComponent, canActivate: [AuthGuard] },
+  { path: ':serviceType/:org/create', component: ProjectCreateComponent, canActivate: [AuthGuard] },
+  { path: ':serviceType/:org/:repo/edit', component: ProjectEditComponent, canActivate: [AuthGuard] },
+  { path: ':serviceType/:org/:repo/pr/:prNumber', component: ProjectDeployComponent, canActivate: [AuthGuard] },
+  // { path: ':serviceType/:orgId/:repo/pr/:prNumber/job', component: ProjectDeployLogsComponent, canActivate: [AuthGuard] },
 
   { path: '**', redirectTo: 'login' }
 ];
