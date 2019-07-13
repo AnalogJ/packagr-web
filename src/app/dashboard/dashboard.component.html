@@ -135,7 +135,7 @@
     <div class="col-xlg-4 col-lg-6 col-12 mb-30">
       <div class="box">
         <div class="box-head">
-          <h4 class="title">Repository</h4>
+          <h4 class="title">Projects</h4>
         </div>
         <div class="box-body p-0">
 
@@ -143,110 +143,14 @@
           <ul class="todo-list">
 
             <!--Todo Item Start-->
-            <li class="done">
+            <li *ngFor="let project of projects" class="done">
               <div class="list-action">
                 <button class="status"><i class="zmdi zmdi-star-outline"></i></button>
                 <label class="adomx-checkbox"><input type="checkbox"> <i class="icon"></i></label>
                 <button class="remove"><i class="zmdi zmdi-delete"></i></button>
               </div>
               <div class="list-content">
-                <p>Sed ut perspiciatis unde omnis iste natus error.</p>
-              </div>
-              <div class="list-action right">
-                <button class="remove"><i class="zmdi zmdi-delete"></i></button>
-              </div>
-            </li>
-            <!--Todo Item End-->
-
-            <!--Todo Item Start-->
-            <li>
-              <div class="list-action">
-                <button class="status"><i class="zmdi zmdi-star-outline"></i></button>
-                <label class="adomx-checkbox"><input type="checkbox"> <i class="icon"></i></label>
-                <button class="remove"><i class="zmdi zmdi-delete"></i></button>
-              </div>
-              <div class="list-content">
-                <p>Mistaken idea of denouncing pleasure.</p>
-              </div>
-              <div class="list-action right">
-                <button class="remove"><i class="zmdi zmdi-delete"></i></button>
-              </div>
-            </li>
-            <!--Todo Item End-->
-
-            <!--Todo Item Start-->
-            <li>
-              <div class="list-action">
-                <button class="status"><i class="zmdi zmdi-star-outline"></i></button>
-                <label class="adomx-checkbox"><input type="checkbox"> <i class="icon"></i></label>
-                <button class="remove"><i class="zmdi zmdi-delete"></i></button>
-              </div>
-              <div class="list-content">
-                <p>Encounter consequences that are.</p>
-              </div>
-              <div class="list-action right">
-                <button class="remove"><i class="zmdi zmdi-delete"></i></button>
-              </div>
-            </li>
-            <!--Todo Item End-->
-
-            <!--Todo Item Start-->
-            <li>
-              <div class="list-action">
-                <button class="status"><i class="zmdi zmdi-star-outline"></i></button>
-                <label class="adomx-checkbox"><input type="checkbox"> <i class="icon"></i></label>
-                <button class="remove"><i class="zmdi zmdi-delete"></i></button>
-              </div>
-              <div class="list-content">
-                <p>Sed ut perspiciatis unde omnis iste natus error.</p>
-              </div>
-              <div class="list-action right">
-                <button class="remove"><i class="zmdi zmdi-delete"></i></button>
-              </div>
-            </li>
-            <!--Todo Item End-->
-
-            <!--Todo Item Start-->
-            <li class="done">
-              <div class="list-action">
-                <button class="status"><i class="zmdi zmdi-star-outline"></i></button>
-                <label class="adomx-checkbox"><input type="checkbox"> <i class="icon"></i></label>
-                <button class="remove"><i class="zmdi zmdi-delete"></i></button>
-              </div>
-              <div class="list-content">
-                <p>Sed ut perspiciatis unde omnis iste natus error.</p>
-              </div>
-              <div class="list-action right">
-                <button class="remove"><i class="zmdi zmdi-delete"></i></button>
-              </div>
-            </li>
-            <!--Todo Item End-->
-
-            <!--Todo Item Start-->
-            <li>
-              <div class="list-action">
-                <button class="status"><i class="zmdi zmdi-star-outline"></i></button>
-                <label class="adomx-checkbox"><input type="checkbox"> <i class="icon"></i></label>
-                <button class="remove"><i class="zmdi zmdi-delete"></i></button>
-              </div>
-              <div class="list-content">
-                <p>Nor again is there anyone who loves.</p>
-              </div>
-              <div class="list-action right">
-                <button class="remove"><i class="zmdi zmdi-delete"></i></button>
-              </div>
-            </li>
-            <!--Todo Item End-->
-
-            <!--Todo Item Start-->
-            <li>
-              <div class="list-action">
-                <button class="status"><i class="zmdi zmdi-star-outline"></i></button>
-                <label class="adomx-checkbox"><input type="checkbox"> <i class="icon"></i></label>
-                <button class="remove"><i class="zmdi zmdi-delete"></i></button>
-              </div>
-              <div class="list-content">
-                <p>Sed ut perspiciatis unde omnis iste natus error.</p>
+                <p>{{project.org}}/{{project.repo}}</p>
               </div>
               <div class="list-action right">
                 <button class="remove"><i class="zmdi zmdi-delete"></i></button>

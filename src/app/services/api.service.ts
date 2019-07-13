@@ -8,6 +8,7 @@ import {Organization} from '../models/organization';
 import {Repository} from '../models/repository';
 import {User} from '../models/user';
 import {Project} from '../models/project';
+import {PullRequest} from '../models/pull-request';
 
 @Injectable()
 export class ApiService {
@@ -101,27 +102,28 @@ export class ApiService {
   //
   // // Authenticated functions
   //
-  getProjects(): Observable<Project[]> {
+  getProjects(org: string, params?): Observable<Project[]> {
     // var url = `${AppSettings.API_ENDPOINT}/project`;
     // var cacheKey = this.cacheKey('GET', url);
     // return this.cacheService.get(cacheKey) || this.cacheService.put(cacheKey, this.authHttp.get(url)
     //       .map(this.extractData)
-    //       .catch(this.handleError))
-    const params = new HttpParams();
-    const url = `${AppSettings.API_ENDPOINT}/fetch/${this.serviceType()}/user`;
+    //       .catch(this.handleError))//project/{serviceType}/{org}/
+    const url = `${AppSettings.API_ENDPOINT}/project/${this.serviceType()}/${org}`;
 
-    return this.http.get<Project[]>(url)
+    return this.http.get<Project[]>(url, {params})
       .pipe(catchError(this.handleError));
   }
-  //
-  // getProject(orgId:string, repoId:string): Observable<any> {
-  //   var url = `${AppSettings.API_ENDPOINT}/project/${this.serviceType()}/${orgId}/${repoId}`;
-  //   var cacheKey = this.cacheKey('GET', url);
-  //   return this.cacheService.get(cacheKey) || this.cacheService.put(cacheKey, this.authHttp.get(url)
-  //         .map(this.extractData)
-  //         .catch(this.handleError))
-  // }
-  //
+
+  getProject(org: string, repo: string, queryParams?): Observable<Project> {
+    const url = `${AppSettings.API_ENDPOINT}/project/${this.serviceType()}/${org}/${repo}`;
+    // var cacheKey = this.cacheKey('GET', url);
+    // return this.cacheService.get(cacheKey) || this.cacheService.put(cacheKey, this.authHttp.get(url)
+    //       .map(this.extractData)
+    //       .catch(this.handleError))
+    return this.http.get<Project>(url, { params: queryParams })
+      .pipe(catchError(this.handleError));
+  }
+
   createProject(org, repo, queryParams) {
     return this.http.post(`${AppSettings.API_ENDPOINT}/project/${this.serviceType()}/${org}/${repo}`, {},
        { params: queryParams })
@@ -196,18 +198,25 @@ export class ApiService {
       .pipe(catchError(this.handleError));
 
   }
-  //
-  // fetchOrgRepoPullRequests(orgId:string, repoId:string, page?:number): Observable<any>{
-  //   let params: URLSearchParams = new URLSearchParams();
-  //   params.set('page', (page || 0).toString());
-  //   var url = `${AppSettings.API_ENDPOINT}/fetch/${this.serviceType()}/orgs/${orgId}/repos/${repoId}/pullrequests`;
-  //
-  //   var cacheKey = this.cacheKey('GET', url, params);
-  //   return this.cacheService.get(cacheKey) || this.cacheService.put(cacheKey, this.authHttp.get(url,{ search: params })
-  //         .map(this.extractData)
-  //         .catch(this.handleError))
-  // }
-  //
+
+  fetchOrgRepoPullRequests(params, page?: number): Observable<PullRequest[]> {
+    if (page) {
+      params.page = (page || 0).toString();
+    }
+
+    const url = `${AppSettings.API_ENDPOINT}/fetch/${this.serviceType()}/pullrequests`;
+
+    return this.http.get<PullRequest[]>(url, {
+      params
+    })
+      .pipe(catchError(this.handleError));
+
+    // var cacheKey = this.cacheKey('GET', url, params);
+    // return this.cacheService.get(cacheKey) || this.cacheService.put(cacheKey, this.authHttp.get(url,{ search: params })
+    //       .map(this.extractData)
+    //       .catch(this.handleError))
+  }
+
   // fetchOrgRepoPullRequest(orgId:string, repoId:string, prNumber:number): Observable<any>{
   //   var url = `${AppSettings.API_ENDPOINT}/fetch/${this.serviceType()}/orgs/${orgId}/repos/${repoId}/pullrequests/${prNumber}`;
   //
