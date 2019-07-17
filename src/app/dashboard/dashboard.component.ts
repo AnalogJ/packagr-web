@@ -31,6 +31,11 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  changeActiveProject(project: Project) {
+    this.activeProject = project;
+    this.getProjectPullRequests();
+  }
+
   getProjects() {
     this.apiService.getProjects(this.activeOrg.slug).subscribe(
       data => {
@@ -40,7 +45,7 @@ export class DashboardComponent implements OnInit {
           this.router.navigate([`/${this.apiService.serviceType()}/${this.activeOrg.slug}/create`]);
         } else {
           this.activeProject = this.projects[0];
-          this.getProjectPullRequests()
+          this.getProjectPullRequests();
         }
       }
       // error => this.alerts.push(new Alert('Error retrieving projects', error.message)),

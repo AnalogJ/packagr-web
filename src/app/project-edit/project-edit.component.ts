@@ -9,6 +9,8 @@ import {Project} from '../models/project';
   styleUrls: ['./project-edit.component.sass']
 })
 export class ProjectEditComponent implements OnInit {
+  hideAddSecretForm: boolean = true;
+
   repo: string;
   org: string;
 

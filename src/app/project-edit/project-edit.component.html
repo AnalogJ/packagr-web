@@ -10,80 +10,137 @@
     <!-- Page Heading Start -->
     <div class="col-12 col-lg-auto mb-20">
       <div class="page-heading">
-        <h3>{{org}}/{{repo}}  <span> Edit Project </span></h3>
+        <h3>{{org}}/{{repo}} <a target="_blank" href=""><fa-icon [icon]="['fab', 'github']"></fa-icon></a> <span> Edit Project </span> </h3>
       </div>
     </div><!-- Page Heading End -->
 
     <!-- Page Button Group Start -->
     <div class="col-12 col-lg-auto mb-20">
       <div class="buttons-group">
-        <button class="button button-outline button-primary">Save & Publish</button>
-        <button class="button button-outline button-info">Save to Draft</button>
-        <button class="button button-outline button-danger">Delete Product</button>
+        <button class="button button-outline button-danger">Delete Project</button>
       </div>
     </div><!-- Page Button Group End -->
 
   </div><!-- Page Headings End -->
 
-  <!-- Add or Edit Product Start -->
-  <div class="add-edit-product-wrap col-12">
-
-    <div class="add-edit-product-form">
-      <form action="#">
-
-        <h4 class="title">Project Settings</h4>
-
-        <div class="row">
-          <div class="col-lg-6 col-12 mb-30"><input class="form-control" type="text" value="Product Name / Title*"></div>
-          <div class="col-lg-6 col-12 mb-30"><input class="form-control" type="text" value="Product Sub-title"></div>
-          <div class="col-lg-6 col-12 mb-30"><input class="form-control" type="text" value="Product Price*"></div>
-          <div class="col-lg-6 col-12 mb-30"><input class="form-control" type="text" value="Product Discount"></div>
-          <div class="col-12 mb-30"><textarea class="form-control">Product Description</textarea></div>
-          <div class="col-lg-6 col-12 mb-30">
-            <select class="form-control nice-select">
-              <option value="status">Status</option>
-              <option value="publish">Publish</option>
-              <option value="draft">Draft</option>
-            </select>
-          </div>
-          <div class="col-lg-6 col-12 mb-30"><input class="form-control" type="text" value="Meta Title"></div>
-          <div class="col-lg-6 col-12 mb-30"><input class="form-control" type="text" value="Meta Keyword"></div>
-          <div class="col-lg-6 col-12 mb-30"><input class="form-control" type="text" value="Aditional Description Image Link"></div>
-        </div>
-
-        <h4 class="title">Product Gallery</h4>
-
-        <div class="product-upload-gallery row flex-wrap">
-          <div class="col-12 mb-30">
-            <p class="form-help-text mt-0">Upload Maximum 800 x 800 px & Max size 2mb.</p>
-            <input class="file-pond" type="file" multiple>
-          </div>
-        </div>
-
-        <h4 class="title">Additional Information</h4>
-
-        <div class="row">
-          <div class="col-lg-4 col-12 mb-30"><input class="form-control" type="text" value="Information 1"></div>
-          <div class="col-lg-4 col-12 mb-30"><input class="form-control" type="text" value="Information 2"></div>
-          <div class="col-lg-4 col-12 mb-30"><input class="form-control" type="text" value="Information 3"></div>
-          <div class="col-lg-4 col-12 mb-30"><input class="form-control" type="text" value="Information 4"></div>
-          <div class="col-lg-4 col-12 mb-30"><input class="form-control" type="text" value="Information 5"></div>
-          <div class="col-lg-4 col-12 mb-30"><input class="form-control" type="text" value="Information 6"></div>
-        </div>
-
-        <!-- Button Group Start -->
-        <div class="row">
-          <div class="d-flex flex-wrap justify-content-end col mbn-10">
-            <button class="button button-outline button-primary mb-10 ml-10 mr-0">Save & Publish</button>
-            <button class="button button-outline button-info mb-10 ml-10 mr-0">Save to Draft</button>
-            <button class="button button-outline button-danger mb-10 ml-10 mr-0">Delete Product</button>
-          </div>
-        </div><!-- Button Group End -->
-
-      </form>
+  <div class="row mb-30">
+    <div class="col-12">
+      <p>Update your project settings here, like library language, Docker container and secrets. These settings will be used whenever you publish a new version of your library
+      </p>
     </div>
+  </div>
 
-  </div><!-- Add or Edit Product End -->
+  <div class="row mbn-30">
+
+    <!--Default Form Start-->
+    <div class="col-lg-6 col-12 mb-30">
+      <div class="box">
+        <div class="box-head">
+          <h4 class="title">Project Settings</h4>
+        </div>
+        <div class="box-body">
+          <form>
+
+            <div class="row mbn-20">
+
+              <div class="col-12 mb-20">
+                <label for="formLayoutUsername1">Package Type</label>
+                <select id="formLayoutState1" class="form-control">
+                  <option>Select State</option>
+                  <option>State One</option>
+                  <option>State Two</option>
+                  <option>State Three</option>
+                </select>              </div>
+              <div class="col-12 mb-20">
+                <label for="formLayoutEmail1">Version Increment</label>
+                <select id="formLayoutState1" class="form-control">
+                  <option>Select State</option>
+                  <option>State One</option>
+                  <option>State Two</option>
+                  <option>State Three</option>
+                </select>              </div>
+              <div class="col-12 mb-20">
+                <label for="formLayoutPassword1">Docker Image</label>
+                <select id="formLayoutState1" class="form-control">
+                  <option>Select State</option>
+                  <option>State One</option>
+                  <option>State Two</option>
+                  <option>State Three</option>
+                </select>              </div>
+
+              <div class="col-12 mb-20">
+                <input type="submit" value="submit" class="button button-primary">
+                <input type="submit" value="cancle" class="button button-danger">
+              </div>
+
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!--Default Form End-->
+
+    <!--Default Form Start-->
+    <div class="col-lg-6 col-12 mb-30">
+      <div class="box">
+        <div class="box-head">
+          <h4 class="title">Project Secrets
+            <span class="float-right">
+              <fa-icon (click)="hideAddSecretForm = !hideAddSecretForm" [attr.aria-expanded]="!hideAddSecretForm" [icon]="['far', 'plus-square']" size="lg" class="text-success"></fa-icon>
+            </span></h4>
+        </div>
+        <div class="box-body">
+          <form>
+            <div class="row">
+              <div class="col-12 mb-20">
+                Add environment variables to the project build. You can add sensitive data (e.g. NPM, RubyGems API keys) here, rather than placing them in the repository.
+              </div>
+            </div>
+
+            <div class="row">
+              <div [collapse]="hideAddSecretForm" class="col-12 mb-20">
+                <label for="formLayoutUsername1">Secret Name</label>
+                <input type="text" id="formLayoutUsername1" class="form-control" placeholder="Username">
+              </div>
+              <div [collapse]="hideAddSecretForm" class="col-12 mb-20">
+                <label for="formLayoutEmail1">Secret Value</label>
+                <input type="email" id="formLayoutEmail1" class="form-control" placeholder="Email">
+              </div>
+
+              <div [collapse]="hideAddSecretForm" class="col-12 mb-20">
+                <input type="submit" value="submit" class="button button-primary">
+                <input type="submit" value="cancle" class="button button-danger">
+              </div>
+            </div>
+
+            <div class="row mbn-20">
+
+              <table class="table">
+                <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>Added</th>
+                  <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <th>1</th>
+                  <td>Mark</td>
+                  <td>11/04/2019</td>
+                  <td><fa-icon [icon]="['far', 'trash-alt']" class="text-danger"></fa-icon></td>
+                </tr>
+                </tbody>
+              </table>
+
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!--Default Form End-->
+  </div>
 
 </div><!-- Content Body End -->
 

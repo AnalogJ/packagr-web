@@ -217,14 +217,15 @@ export class ApiService {
     //       .catch(this.handleError))
   }
 
-  // fetchOrgRepoPullRequest(orgId:string, repoId:string, prNumber:number): Observable<any>{
-  //   var url = `${AppSettings.API_ENDPOINT}/fetch/${this.serviceType()}/orgs/${orgId}/repos/${repoId}/pullrequests/${prNumber}`;
-  //
-  //   var cacheKey = this.cacheKey('GET', url);
-  //   return this.cacheService.get(cacheKey) || this.cacheService.put(cacheKey, this.authHttp.get(url)
-  //         .map(this.extractData)
-  //         .catch(this.handleError))
-  // }
+  fetchOrgRepoPullRequest(params): Observable<PullRequest>{
+    const url = `${AppSettings.API_ENDPOINT}/fetch/${this.serviceType()}/pullrequest`;
+
+    return this.http.get<PullRequest>(url, {
+      params
+    })
+      .pipe(catchError(this.handleError));
+
+  }
 
 
 

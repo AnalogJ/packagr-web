@@ -28,7 +28,7 @@
     <!--Alert End-->
 
     <!-- Invoice List Start -->
-    <div class="col-12 mb-30">s
+    <div class="col-12 mb-30">
       <div class="table-responsive">
         <table class="table table-bordered mb-0">
 
@@ -50,17 +50,23 @@
           <tr *ngFor="let repo of repos"s>
             <td>{{repo.org}}</td>
             <td>{{repo.name}}</td>
-            <td>{{repo.description}}</td>
-            <td>{{repo.updatedAt}}</td>
+            <td><p>{{repo.description}}</p></td>
+            <td>{{repo.updatedAt | amTimeAgo }}</td>
             <td>{{repo.language}}</td>
-            <td>{{repo.private}}</td>
+            <td>
+              <fa-icon *ngIf="repo.private" [icon]="['fas', 'lock']" size="lg" class="text-danger"></fa-icon>
+              <fa-icon *ngIf="!repo.private"[icon]="['fas', 'globe-americas']" size="lg" class="text-success"></fa-icon>
+            </td>
             <td >
               <div class="table-action-buttons">
                 <!-- new project buttons-->
-                <a class="create button button-box button-xs button-primary"  (click)="createProject(repo)"><i class="zmdi zmdi-more"></i></a>
-
+                <a (click)="createProject(repo)">
+                  <fa-icon [icon]="['far', 'plus-square']" size="lg" class="text-primary"></fa-icon>
+                </a>
                 <!-- existing project buttons -->
-                <a class="edit button button-box button-xs button-info"  (click)="editProject(repo)"><i class="zmdi zmdi-edit"></i></a>
+                <a (click)="editProject(repo)">
+                  <fa-icon [icon]="['far', 'edit']" size="lg" class="text-info"></fa-icon>
+                </a>
               </div>
             </td>
           </tr>
