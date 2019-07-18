@@ -33,7 +33,7 @@
       <app-placeholder-loading *ngIf="loading.repos"></app-placeholder-loading>
 
       <div *ngIf="repos.length" class="table-responsive">
-        <table class="table table-bordered mb-0">
+        <table class="project-create-table table table-bordered mb-0">
           <!-- Table Head Start -->
           <thead>
           <tr>
@@ -49,29 +49,33 @@
 
           <!-- Table Body Start -->
           <tbody>
-          <tr *ngFor="let repo of repos"s>
-            <td>{{repo.org}}</td>
-            <td>{{repo.name}}</td>
-            <td><p>{{repo.description}}</p></td>
-            <td>{{repo.updatedAt | amTimeAgo }}</td>
-            <td>{{repo.language}}</td>
-            <td>
-              <fa-icon *ngIf="repo.private" [icon]="['fas', 'lock']" size="lg" class="cursor-pointer text-danger"></fa-icon>
-              <fa-icon *ngIf="!repo.private"[icon]="['fas', 'globe-americas']" size="lg" class="cursor-pointer text-success"></fa-icon>
-            </td>
-            <td >
-              <div class="table-action-buttons">
-                <!-- new project buttons-->
-                <a (click)="createProject(repo)">
-                  <fa-icon [icon]="['far', 'plus-square']" size="lg" class="text-primary"></fa-icon>
-                </a>
-                <!-- existing project buttons -->
-                <a (click)="editProject(repo)">
-                  <fa-icon [icon]="['far', 'edit']" size="lg" class="text-info"></fa-icon>
-                </a>
-              </div>
-            </td>
-          </tr>
+            <tr *ngFor="let repo of repos"s>
+              <td>{{repo.org}}</td>
+              <td>{{repo.name}}</td>
+              <td><p>{{repo.description}}</p></td>
+              <td>{{repo.updatedAt | amTimeAgo }}</td>
+              <td>{{repo.language}}</td>
+              <td style="text-align: center;">
+                <fa-icon *ngIf="repo.private" [icon]="['fas', 'lock']" size="lg" class="cursor-pointer text-danger"></fa-icon>
+                <fa-icon *ngIf="!repo.private" [icon]="['fas', 'globe-americas']" size="lg" class="cursor-pointer text-success"></fa-icon>
+              </td>
+              <td style="text-align: center;" >
+                <div *ngIf="existingProject(repo); else newProject" class="table-action-buttons">
+                  <!-- existing project buttons -->
+                  <a (click)="editProject(repo)">
+                    <fa-icon [icon]="['far', 'edit']" size="lg" class="text-info"></fa-icon>
+                  </a>
+                </div>
+
+                <ng-template #newProject>
+                  <!-- new project buttons-->
+                  <a (click)="createProject(repo)">
+                    <fa-icon [icon]="['far', 'plus-square']" size="lg" class="text-primary"></fa-icon>
+                  </a>
+                </ng-template>
+
+              </td>
+            </tr>
           </tbody><!-- Table Body End -->
 
         </table>

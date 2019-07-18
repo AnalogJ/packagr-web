@@ -7,3 +7,9 @@
 .cursor-pointer {
   cursor: pointer;
 }
+
+
+.project-create-table.table tbody > tr > td,
+.project-create-table.table tbody > tr > th {
+  white-space: normal;
+}

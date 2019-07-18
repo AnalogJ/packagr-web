@@ -132,12 +132,13 @@ export class ApiService {
       { params: queryParams })
       .pipe(catchError(this.handleError));
   }
-  //
-  // deleteProject(orgId:string, repoId:string): Observable<any> {
-  //   return this.authHttp.delete(`${AppSettings.API_ENDPOINT}/project/${this.serviceType()}/${orgId}/${repoId}`)
-  //       .map(this.extractData)
-  //       .catch(this.handleError);
-  // }
+
+  deleteProject(org: string, repo: string, queryParams): Observable<any> {
+    return this.http.delete(`${AppSettings.API_ENDPOINT}/project/${this.serviceType()}/${org}/${repo}`, {
+      params: queryParams
+    })
+      .pipe(catchError(this.handleError));
+  }
   //
   // publishProject(orgId:string, repoId:string, prNumber:number, settings?: any): Observable<any>{
   //   return this.authHttp.post(`${AppSettings.API_ENDPOINT}/publish/${this.serviceType()}/${orgId}/${repoId}/${prNumber}`, settings || {})

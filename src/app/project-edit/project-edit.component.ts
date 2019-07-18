@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ApiService} from '../services/api.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Project} from '../models/project';
 import {AppSettings} from '../app-settings';
 import {CommonService} from '../services/common.service';
@@ -18,6 +18,7 @@ export class ProjectEditComponent implements OnInit {
     queryDockerImages: false,
     saveSettings: false,
     saveSecret: false,
+    deleteProject: false,
   };
   hideAddSecretForm: boolean = true;
 
@@ -34,7 +35,7 @@ export class ProjectEditComponent implements OnInit {
 
   secretName: string = '';
   secretValue: string = '';
-  constructor(private apiService: ApiService, private activatedRoute: ActivatedRoute, private commonService: CommonService) { }
+  constructor(private apiService: ApiService, private activatedRoute: ActivatedRoute, private router: Router, private commonService: CommonService) { }
 
   ngOnInit() {
     this.repo = this.activatedRoute.snapshot.params.repo;
@@ -57,8 +58,22 @@ export class ProjectEditComponent implements OnInit {
       // Runs on every search
       observer.next(this.projectData.settings.dockerImage);
     }).mergeMap((token: string) => {
-      this.apiService.fetchDockerImage(token)
+      this.apiService.fetchDockerImage(token);
     });
+  }
+
+  deleteProject() {
+    this.loading.deleteProject = true;
+    this.apiService.deleteProject(this.org, this.repo, {
+      installationId: this.projectData.installation.id
+    })
+      .subscribe(
+        data => {
+          this.router.navigate([`/${this.apiService.serviceType()}/${this.org}`]);
+        },
+        error => this.commonService.addAlert(new Alert('Error deleting project', error.message)),
+        () =>  this.loading.deleteProject = false
+      );
   }
 
   saveSettings() {
