@@ -29,9 +29,11 @@
 
     <!-- Invoice List Start -->
     <div class="col-12 mb-30">
-      <div class="table-responsive">
-        <table class="table table-bordered mb-0">
 
+      <app-placeholder-loading *ngIf="loading.repos"></app-placeholder-loading>
+
+      <div *ngIf="repos.length" class="table-responsive">
+        <table class="table table-bordered mb-0">
           <!-- Table Head Start -->
           <thead>
           <tr>
@@ -54,8 +56,8 @@
             <td>{{repo.updatedAt | amTimeAgo }}</td>
             <td>{{repo.language}}</td>
             <td>
-              <fa-icon *ngIf="repo.private" [icon]="['fas', 'lock']" size="lg" class="text-danger"></fa-icon>
-              <fa-icon *ngIf="!repo.private"[icon]="['fas', 'globe-americas']" size="lg" class="text-success"></fa-icon>
+              <fa-icon *ngIf="repo.private" [icon]="['fas', 'lock']" size="lg" class="cursor-pointer text-danger"></fa-icon>
+              <fa-icon *ngIf="!repo.private"[icon]="['fas', 'globe-americas']" size="lg" class="cursor-pointer text-success"></fa-icon>
             </td>
             <td >
               <div class="table-action-buttons">

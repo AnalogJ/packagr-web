@@ -137,39 +137,42 @@
         <div class="box-head">
           <h4 class="title">Projects
             <span class="float-right">
-              <fa-icon [routerLink]="'/gh/' + activeOrg.slug + '/create'" [icon]="['far', 'plus-square']" size="lg" class="text-success"></fa-icon>
+              <fa-icon [routerLink]="'/gh/' + activeOrg.slug + '/create'" [icon]="['far', 'plus-square']" size="lg" class="cursor-pointer text-success"></fa-icon>
             </span></h4>
         </div>
         <div class="box-body p-0">
 
-          <!--Todo List Start-->
-          <ul class="todo-list">
+          <app-placeholder-loading *ngIf="loading.projects"></app-placeholder-loading>
 
-            <!--Todo Item Start-->
-            <li *ngFor="let project of projects" class="done">
-              <div class="list-action">
-                <button class="status"><i class="zmdi zmdi-star-outline"></i></button>
-              </div>
-              <div class="list-content" (click)="changeActiveProject(project)">
-                <p>{{project.org}}/{{project.repo}}</p>
-              </div>
-              <div class="list-action right">
-                <span [routerLink]="'/' + project.serviceType + '/' + project.org + '/' + project.repo + '/edit'" class="float-right"><fa-icon [icon]="['fas', 'cog']" class="text-primary"></fa-icon></span>
-              </div>
-            </li>
-            <!--Todo Item End-->
+          <div *ngIf="projects.length">
+            <!--Todo List Start-->
+            <ul  class="todo-list">
 
-          </ul>
-          <!--Todo List End-->
+              <!--Todo Item Start-->
+              <li *ngFor="let project of projects">
+                <div class="list-action">
+                  <button class="status"><i class="zmdi zmdi-star-outline"></i></button>
+                </div>
+                <div class="list-content cursor-pointer" (click)="changeActiveProject(project)">
+                  <p>{{project.org}}/{{project.repo}}</p>
+                </div>
+                <div class="list-action right">
+                  <span [routerLink]="'/' + project.serviceType + '/' + project.org + '/' + project.repo + '/edit'" class="float-right"><fa-icon [icon]="['fas', 'cog']" class="cursor-pointer text-primary"></fa-icon></span>
+                </div>
+              </li>
+              <!--Todo Item End-->
 
-          <!--Add Todo List Start-->
-          <form action="#" class="todo-list-add-new" data-date="false">
-            <label class="status"><input type="checkbox"><i class="icon zmdi zmdi-star-outline"></i></label>
-            <input class="content" type="text" placeholder="Type new Task">
-            <button class="submit"><i class="zmdi zmdi-plus-circle-o"></i></button>
-          </form>
-          <!--Add Todo List End-->
+            </ul>
+            <!--Todo List End-->
 
+            <!--Add Todo List Start-->
+            <form action="#" class="todo-list-add-new" data-date="false">
+              <label class="status"><input type="checkbox"><i class="icon zmdi zmdi-star-outline"></i></label>
+              <input class="content" type="text" placeholder="Type new Task">
+              <button class="submit"><i class="zmdi zmdi-plus-circle-o"></i></button>
+            </form>
+            <!--Add Todo List End-->
+          </div>
         </div>
       </div>
     </div><!-- Project List End -->
@@ -179,12 +182,14 @@
     <div class="col-xlg-8 col-lg-6 col-12 mb-30">
       <div class="box">
         <div class="box-head">
-          <h4 class="title">Pull Request</h4>
+          <h4 class="title">Pull Requests</h4>
         </div>
         <div class="box-body">
+          <app-placeholder-loading *ngIf="loading.pullrequests"></app-placeholder-loading>
+
 
           <ul *ngFor="let pr of activeProjectPRs" class="list-group">
-            <li class="list-group-item">
+            <li class="list-group-item mb-20">
               <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">{{pr.title}} </h5>
                 <small>{{pr.updatedAt | amTimeAgo }}</small>

@@ -7,6 +7,7 @@ import {CommonService} from '../services/common.service';
 import {Project} from '../models/project';
 import {Router} from '@angular/router';
 import {PullRequest} from '../models/pull-request';
+import {Alert} from '../models/alert';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,6 +15,11 @@ import {PullRequest} from '../models/pull-request';
   styleUrls: ['./dashboard.component.sass']
 })
 export class DashboardComponent implements OnInit {
+  loading: {[comp: string]: boolean; } = {
+    projects: true,
+    pullrequests: false
+  };
+
   projects: Project[] = [];
   activeProject: Project = null
   activeProjectPRs: PullRequest[];
@@ -37,6 +43,8 @@ export class DashboardComponent implements OnInit {
   }
 
   getProjects() {
+    this.loading.projects = true;
+
     this.apiService.getProjects(this.activeOrg.slug).subscribe(
       data => {
         console.log(data);
@@ -47,14 +55,15 @@ export class DashboardComponent implements OnInit {
           this.activeProject = this.projects[0];
           this.getProjectPullRequests();
         }
-      }
-      // error => this.alerts.push(new Alert('Error retrieving projects', error.message)),
-      // () => this.loading.projects = false
+      },
+      error => this.commonService.addAlert(new Alert('Error retrieving projects', error.message)),
+      () => this.loading.projects = false
     );
   }
 
   private getProjectPullRequests() {
-    // this.loading.pullrequests[this.selectedProject.RepoId] = true;
+    this.loading.pullrequests = true;
+    this.activeProjectPRs = [];
     this.apiService.fetchOrgRepoPullRequests({
       org: this.activeProject.org,
       repo: this.activeProject.repo,
@@ -64,8 +73,8 @@ export class DashboardComponent implements OnInit {
         console.log(data);
         this.activeProjectPRs = data;
       },
-      // error => this.alerts.push(new Alert('Error retrieving pull requests', error.message)),
-      // () => this.loading.pullrequests[this.selectedProject.RepoId] = false
+      error => this.commonService.addAlert(new Alert('Error retrieving pull requests', error.message)),
+      () => this.loading.pullrequests = false
     );
   }
 

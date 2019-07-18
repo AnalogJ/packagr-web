@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,6 +19,7 @@ import { fab } from '@fortawesome/free-brands-svg-icons';
 import { MomentModule } from 'ngx-moment';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 
 import { ApiService } from './services/api.service';
 import { AuthConnectComponent } from './auth-connect/auth-connect.component';
@@ -29,6 +31,9 @@ import { ProjectDeployComponent } from './project-deploy/project-deploy.componen
 import { HeaderComponent } from './partials/header/header.component';
 import { LeftMenuComponent } from './partials/left-menu/left-menu.component';
 import { FooterComponent } from './partials/footer/footer.component';
+import { PlaceholderLoadingComponent } from './partials/placeholder-loading/placeholder-loading.component';
+import { PlaceholderErrorComponent } from './partials/placeholder-error/placeholder-error.component';
+import { PlaceholderEmptyComponent } from './partials/placeholder-empty/placeholder-empty.component';
 
 
 export function getToken() {
@@ -47,12 +52,16 @@ export function getToken() {
     ProjectDeployComponent,
     HeaderComponent,
     LeftMenuComponent,
-    FooterComponent
+    FooterComponent,
+    PlaceholderLoadingComponent,
+    PlaceholderErrorComponent,
+    PlaceholderEmptyComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
+    FormsModule,
     FontAwesomeModule,
     JwtModule.forRoot({
       config: {
@@ -67,6 +76,7 @@ export function getToken() {
     BrowserAnimationsModule,
     BsDropdownModule.forRoot(),
     CollapseModule.forRoot(),
+    TypeaheadModule.forRoot(),
     MomentModule
 
   ],

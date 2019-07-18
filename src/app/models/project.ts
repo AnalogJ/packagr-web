@@ -6,9 +6,15 @@ export class Project {
   scmRepoId: string;
   scmUrl: string;
 
-  installation: any;
-  secrets: any;
-  settings: any;
+  installation: {
+    id: string;
+  };
+  secrets: {[prop: string]: string};
+  settings: {
+    packageType: string;
+    dockerImage: string;
+    versionIncr: string;
+  };
   status: any;
   private: boolean;
 }

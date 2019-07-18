@@ -3,6 +3,9 @@ import {ApiService} from '../services/api.service';
 import {ActivatedRoute} from '@angular/router';
 import {Project} from '../models/project';
 import {PullRequest} from '../models/pull-request';
+import {CommonService} from '../services/common.service';
+import {Alert} from '../models/alert';
+import {AppSettings} from '../app-settings';
 
 @Component({
   selector: 'app-project-deploy',
@@ -10,6 +13,10 @@ import {PullRequest} from '../models/pull-request';
   styleUrls: ['./project-deploy.component.sass']
 })
 export class ProjectDeployComponent implements OnInit {
+  loading: {[comp: string]: boolean} = {
+    pullrequest: true,
+    project: true,
+  }
 
   repo: string;
   org: string;
@@ -17,7 +24,9 @@ export class ProjectDeployComponent implements OnInit {
   projectData: Project = new Project();
   pullRequestData: PullRequest = new PullRequest();
 
-  constructor(private apiService: ApiService, private activatedRoute: ActivatedRoute) { }
+  optionDockerImages = AppSettings.DOCKER_IMAGES;
+  versionIncr: string = 'patch';
+  constructor(private apiService: ApiService, private commonService: CommonService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.repo = this.activatedRoute.snapshot.params.repo;
@@ -29,6 +38,7 @@ export class ProjectDeployComponent implements OnInit {
         data => {
           console.log(data);
           this.projectData = data;
+          this.versionIncr = this.projectData.settings.versionIncr || this.versionIncr
 
           this.apiService.fetchOrgRepoPullRequest({
             installationId: this.projectData.installation.id,
@@ -41,12 +51,12 @@ export class ProjectDeployComponent implements OnInit {
                 console.log(prData);
                 this.pullRequestData = prData;
               },
-              // error => this.alerts.push(new Alert('Error retrieving project', error.message)),
-              // () => this.loading.project = false
+              error => this.commonService.addAlert(new Alert('Error retrieving project', error.message)),
+              () => this.loading.pullrequest = false
             );
         },
-        // error => this.alerts.push(new Alert('Error retrieving project', error.message)),
-        // () => this.loading.project = false
+        error => this.commonService.addAlert(new Alert('Error retrieving project', error.message)),
+        () => this.loading.project = false
       );
 
 

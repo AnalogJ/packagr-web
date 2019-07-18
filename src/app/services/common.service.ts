@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import {Organization} from '../models/organization';
 import {User} from '../models/user';
 import {ApiService} from './api.service';
+import {Alert} from '../models/alert';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,9 @@ export class CommonService {
 
   private userSource = new BehaviorSubject(new User());
   currentUser = this.userSource.asObservable();
+
+  private alertsSource = new BehaviorSubject([]);
+  currentAlerts = this.alertsSource.asObservable();
 
   constructor(private apiService: ApiService) {
     this.apiService.fetchUser().subscribe(
@@ -33,6 +37,12 @@ export class CommonService {
 
   changeUser(nextUser: User) {
     this.userSource.next(nextUser);
+  }
+
+  addAlert(newAlert: Alert) {
+    const alerts = this.alertsSource.getValue();
+    alerts.push(newAlert);
+    this.alertsSource.next(alerts);
   }
 
 

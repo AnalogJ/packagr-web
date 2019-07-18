@@ -85,20 +85,17 @@ export class ApiService {
       .pipe(catchError(this.handleError));
   }
 
-  //
-  // fetchDockerImage(dockerImage): Observable<any>{
-  //   let params: URLSearchParams = new URLSearchParams();
-  //   params.set('query', dockerImage);
-  //
-  //   return this.http.get(`//crossorigin.me/https://cloud.docker.com/v2/search/repositories/`, {
-  //     search: params
-  //   })
-  //       .map((res: Response) => {
-  //         let body = res.json();
-  //         return body.results || [];
-  //       })
-  //       .catch(this.handleError);
-  // }
+
+  fetchDockerImage(dockerImage): Observable<any> {
+    const params = {
+      query: dockerImage
+    }
+
+    return this.http.get(`https://cloud.docker.com/v2/search/repositories/`, {
+      params
+    })
+      .pipe(catchError(this.handleError));
+  }
   //
   // // Authenticated functions
   //
@@ -130,11 +127,11 @@ export class ApiService {
       .pipe(catchError(this.handleError));
 
   }
-  // editProject(orgId:string, repoId:string, payload: any): Observable<any> {
-  //   return this.authHttp.put(`${AppSettings.API_ENDPOINT}/project/${this.serviceType()}/${orgId}/${repoId}`, payload)
-  //       .map(this.extractData)
-  //       .catch(this.handleError);
-  // }
+  editProject(org: string, repo: string, queryParams, payload: any): Observable<any> {
+    return this.http.put(`${AppSettings.API_ENDPOINT}/project/${this.serviceType()}/${org}/${repo}`, payload,
+      { params: queryParams })
+      .pipe(catchError(this.handleError));
+  }
   //
   // deleteProject(orgId:string, repoId:string): Observable<any> {
   //   return this.authHttp.delete(`${AppSettings.API_ENDPOINT}/project/${this.serviceType()}/${orgId}/${repoId}`)

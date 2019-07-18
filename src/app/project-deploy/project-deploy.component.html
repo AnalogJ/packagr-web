@@ -10,7 +10,7 @@
     <!-- Page Heading Start -->
     <div class="col-12 col-lg-auto mb-20">
       <div class="page-heading">
-        <h3>{{projectData.org}}/{{projectData.repo}} #{{prNumber}} <a target="_blank" [href]="pullRequestData.link"><fa-icon [icon]="['fab', 'github']"></fa-icon></a> <span> Deploy Project </span> </h3>
+        <h3>Deploy Project <span>/ <a target="_blank" [href]="pullRequestData.link">{{projectData.org}}/{{projectData.repo}} #{{prNumber}} <fa-icon [icon]="['fab', 'github']"></fa-icon></a> </span> </h3>
 
       </div>
     </div><!-- Page Heading End -->
@@ -24,13 +24,15 @@
           <h4 class="title">Pull Request Info</h4>
         </div>
         <div class="box-body">
-          <h6>{{pullRequestData.title}}</h6>
-          <a target="_blank" [href]="pullRequestData.link">#{{pullRequestData.id}} <fa-icon [icon]="['fab', 'github']"></fa-icon></a> opened {{pullRequestData.updatedAt | amTimeAgo }} by <a target="_blank" [href]="pullRequestData.userUrl">{{pullRequestData.user}}</a>
-          <br/>
-          <code>{{pullRequestData.description}}</code>
-          <br/>
-          <span *ngFor="let label of pullRequestData.labels" class="badge badge-dark">{{label}}</span>
-
+          <app-placeholder-loading *ngIf="loading.pullrequest"></app-placeholder-loading>
+          <div *ngIf="pullRequestData">
+            <h6>{{pullRequestData.title}}</h6>
+            <a target="_blank" [href]="pullRequestData.link">#{{pullRequestData.id}} <fa-icon [icon]="['fab', 'github']"></fa-icon></a> opened {{pullRequestData.updatedAt | amTimeAgo }} by <a target="_blank" [href]="pullRequestData.userUrl">{{pullRequestData.user}}</a>
+            <br/>
+            <code>{{pullRequestData.description}}</code>
+            <br/>
+            <span *ngFor="let label of pullRequestData.labels" class="badge badge-dark">{{label}}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -42,47 +44,49 @@
     <div class="offset-lg-2 col-lg-8 col-12 mb-20">
       <div class="box">
         <div class="box-head">
-          <h4 class="title">Project Info<a [routerLink]="'/' + projectData.serviceType + '/' + projectData.org + '/' + projectData.repo + '/edit'" class="float-right">
-              <fa-icon [icon]="['far', 'edit']" size="lg" class="text-success"></fa-icon>
+          <h4 class="title">Project Info <a [routerLink]="'/' + projectData.serviceType + '/' + projectData.org + '/' + projectData.repo + '/edit'" class="float-right">
+              <fa-icon [icon]="['far', 'edit']" size="lg" class="cursor-pointer text-success"></fa-icon>
             </a></h4>
         </div>
         <div class="box-body">
-          <form>
+          <app-placeholder-loading *ngIf="loading.project"></app-placeholder-loading>
+
+          <form *ngIf="projectData">
             <div class="row mbn-20">
 
               <div class="col-12 mb-20">
                 <label for="projectName">Project Name</label>
-                <input disabled id="projectName" value="{{org + '/' + repo}}" name="textinput" type="text" class="form-control" >
+                <input disabled id="projectName" [value]="org + '/' + repo" name="textinput" type="text" class="form-control" >
               </div>
               <div class="col-12 mb-20">
                 <label for="projectType">Project Type</label>
-                <input disabled id="projectType" value="Generic" name="textinput" type="text" class="form-control">
+                <input disabled id="projectType" [value]="optionDockerImages[projectData.settings.packageType].display" name="textinput" type="text" class="form-control">
               </div>
               <div class="col-12 mb-20">
                 <label for="dockerImage">Docker Image</label>
-                <input disabled id="dockerImage" value="Docker Image" name="textinput" type="text" class="form-control">
+                <input disabled id="dockerImage" [value]="projectData.settings.dockerImage" name="textinput" type="text" class="form-control">
               </div>
             </div>
 
             <div class="row mt-20 mb-20">
               <div class="col-12 ">
               <label>Project Secrets</label>
-              <table class="table">
-                <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Name</th>
-                  <th>Added</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                  <th>1</th>
-                  <td>Mark</td>
-                  <td>11/04/2019</td>
-                </tr>
-                </tbody>
-              </table>
+                <table class="table">
+                  <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Added</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let item of projectData.secrets | keyvalue; let i = index;">
+                    <th>{{i+1}}</th>
+                    <td>{{item.key}}</td>
+                    <td>{{item.value.updatedAt | amTimeAgo}}</td>
+                  </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
           </form>
@@ -104,8 +108,8 @@
             <div class="row mbn-20">
 
               <div class="col-12 mb-20">
-                <label for="formLayoutState1">Version Increment</label>
-                <select id="formLayoutState1" class="form-control">
+                <label for="versionIncr">Version Increment</label>
+                <select [(ngModel)]="versionIncr" id="versionIncr" name="versionIncr" class="form-control">
                   <option value="major">Major (1.x.x)</option>
                   <option value="minor">Minor (x.1.x)</option>
                   <option value="patch">Patch (x.x.1)</option>
@@ -113,7 +117,7 @@
               </div>
 
               <div class="col-12 mb-20">
-                <input type="submit" value="Create Release from Pull Request" class="button button-primary">
+                <input type="submit" value="Create Release from Pull Request" class="button button-danger">
               </div>
 
             </div>

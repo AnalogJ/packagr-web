@@ -10,7 +10,7 @@
     <!-- Page Heading Start -->
     <div class="col-12 col-lg-auto mb-20">
       <div class="page-heading">
-        <h3>{{org}}/{{repo}} <a target="_blank" href=""><fa-icon [icon]="['fab', 'github']"></fa-icon></a> <span> Edit Project </span> </h3>
+        <h3>Edit Project <span>/ <a *ngIf="projectData" target="_blank" [href]="projectData.scmUrl">{{org}}/{{repo}} <fa-icon [icon]="['fab', 'github']"></fa-icon></a> </span> </h3>
       </div>
     </div><!-- Page Heading End -->
 
@@ -39,38 +39,45 @@
           <h4 class="title">Project Settings</h4>
         </div>
         <div class="box-body">
-          <form>
 
+          <app-placeholder-loading *ngIf="loading.project"></app-placeholder-loading>
+
+
+          <form *ngIf="projectData">
             <div class="row mbn-20">
 
               <div class="col-12 mb-20">
-                <label for="formLayoutUsername1">Package Type</label>
-                <select id="formLayoutState1" class="form-control">
-                  <option>Select State</option>
-                  <option>State One</option>
-                  <option>State Two</option>
-                  <option>State Three</option>
-                </select>              </div>
+                <label for="packageType">Package Type</label>
+                <select [(ngModel)]="projectData.settings.packageType" (ngModelChange)="packageTypeChanged($event)" id="packageType" name="packageType" class="form-control">
+                  <option *ngFor="let key of optionDockerImagesKeys" [value]="key">{{optionDockerImages[key].display}}</option>
+                </select>
+              </div>
               <div class="col-12 mb-20">
-                <label for="formLayoutEmail1">Version Increment</label>
-                <select id="formLayoutState1" class="form-control">
-                  <option>Select State</option>
-                  <option>State One</option>
-                  <option>State Two</option>
-                  <option>State Three</option>
-                </select>              </div>
+                <label for="versionIncr">Default Version Increment</label>
+                <select [(ngModel)]="projectData.settings.versionIncr" id="versionIncr" name="versionIncr" class="form-control">
+                  <option value="major">Major (1.x.x)</option>
+                  <option value="minor">Minor (x.1.x)</option>
+                  <option value="patch">Patch (x.x.1)</option>
+                </select>
+              </div>
               <div class="col-12 mb-20">
-                <label for="formLayoutPassword1">Docker Image</label>
-                <select id="formLayoutState1" class="form-control">
-                  <option>Select State</option>
-                  <option>State One</option>
-                  <option>State Two</option>
-                  <option>State Three</option>
-                </select>              </div>
+                <label for="dockerImage">Docker Image</label>
+                <input [(ngModel)]="projectData.settings.dockerImage"
+                       [typeahead]="dockerImagesDatasource"
+                       (typeaheadLoading)="dockerImagesLoading($event)"
+                       (typeaheadNoResults)="dockerImagesNoResultsHandler($event)"
+                       [typeaheadOptionsLimit]="7"
+                       [typeaheadOptionField]="'repo_name'"
+                       name="dockerImage"
+                       id="dockerImage"
+                       placeholder="Docker Image (eg. 'AnalogJ/capsulecd')"
+                       type="text"
+                       class="form-control">
+              </div>
 
               <div class="col-12 mb-20">
-                <input type="submit" value="submit" class="button button-primary">
-                <input type="submit" value="cancle" class="button button-danger">
+                <input (click)="saveSettings()" type="submit" value="submit" class="button button-primary">
+                <input type="submit" value="cancel" class="button button-danger">
               </div>
 
             </div>
@@ -86,30 +93,39 @@
         <div class="box-head">
           <h4 class="title">Project Secrets
             <span class="float-right">
-              <fa-icon (click)="hideAddSecretForm = !hideAddSecretForm" [attr.aria-expanded]="!hideAddSecretForm" [icon]="['far', 'plus-square']" size="lg" class="text-success"></fa-icon>
+              <fa-icon (click)="hideAddSecretForm = !hideAddSecretForm" [attr.aria-expanded]="!hideAddSecretForm" [icon]="['far', 'plus-square']" size="lg" class="cursor-pointer text-success"></fa-icon>
             </span></h4>
         </div>
         <div class="box-body">
           <form>
             <div class="row">
               <div class="col-12 mb-20">
+                <p>
                 Add environment variables to the project build. You can add sensitive data (e.g. NPM, RubyGems API keys) here, rather than placing them in the repository.
+                </p>
+                <p *ngIf="projectData.settings.packageType && optionDockerImages[projectData.settings.packageType].recommendedSecrets.length">
+                  {{optionDockerImages[projectData.settings.packageType].display}} packages should have the following secrets configured:
+                  <br/>
+                  <code class="text-strong">
+                {{optionDockerImages[projectData.settings.packageType].recommendedSecrets.join(', ')}}
+                </code>
+                </p>
               </div>
             </div>
 
             <div class="row">
               <div [collapse]="hideAddSecretForm" class="col-12 mb-20">
-                <label for="formLayoutUsername1">Secret Name</label>
-                <input type="text" id="formLayoutUsername1" class="form-control" placeholder="Username">
+                <label for="secretName">Secret Name</label>
+                <input  [(ngModel)]="secretName" type="text" id="secretName" name="secretName" class="form-control" placeholder="Environmental Variable Name">
               </div>
               <div [collapse]="hideAddSecretForm" class="col-12 mb-20">
-                <label for="formLayoutEmail1">Secret Value</label>
-                <input type="email" id="formLayoutEmail1" class="form-control" placeholder="Email">
+                <label for="secretValue">Secret Value</label>
+                <input [(ngModel)]="secretValue" type="password" id="secretValue" name="secretValue" class="form-control" placeholder="Secret">
               </div>
 
               <div [collapse]="hideAddSecretForm" class="col-12 mb-20">
-                <input type="submit" value="submit" class="button button-primary">
-                <input type="submit" value="cancle" class="button button-danger">
+                <input (click)="saveSecret()" type="submit" value="submit" class="button button-primary">
+                <input (click)="cancelSecret()" type="submit" value="cancel" class="button button-danger">
               </div>
             </div>
 
@@ -125,11 +141,11 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                  <th>1</th>
-                  <td>Mark</td>
-                  <td>11/04/2019</td>
-                  <td><fa-icon [icon]="['far', 'trash-alt']" class="text-danger"></fa-icon></td>
+                <tr *ngFor="let item of projectData.secrets | keyvalue; let i = index;">
+                  <th>{{i+1}}</th>
+                  <td>{{item.key}}</td>
+                  <td>{{item.value.updatedAt | amTimeAgo}}</td>
+                  <td><fa-icon [icon]="['far', 'trash-alt']" class="cursor-pointer text-danger"></fa-icon></td>
                 </tr>
                 </tbody>
               </table>
