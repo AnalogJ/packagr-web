@@ -9,7 +9,11 @@ export class Project {
   installation: {
     id: string;
   };
-  secrets: {[prop: string]: string};
+  secrets: {[prop: string]: {
+      encValue: string;
+      updatedAt: string;
+    }
+  };
   settings: {
     packageType: string;
     dockerImage: string;

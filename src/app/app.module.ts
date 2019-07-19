@@ -7,20 +7,20 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-
+// Third Party Components/Directives
 import { JwtModule } from '@auth0/angular-jwt';
-
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
-
 import { MomentModule } from 'ngx-moment';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
+// Application Components/Services/Modules
 import { ApiService } from './services/api.service';
 import { AuthConnectComponent } from './auth-connect/auth-connect.component';
 import { AuthCallbackComponent } from './auth-callback/auth-callback.component';
@@ -69,7 +69,7 @@ export function getToken() {
         authScheme: 'JWT ',
         whitelistedDomains: ['packagr.io', 'beta.packagr.io', 'localhost:4000', 'localhost:3000'],
         blacklistedRoutes: [],
-        throwNoTokenError: true,
+        throwNoTokenError: false,
         skipWhenExpired: true
       }
     }),
@@ -77,8 +77,8 @@ export function getToken() {
     BsDropdownModule.forRoot(),
     CollapseModule.forRoot(),
     TypeaheadModule.forRoot(),
-    MomentModule
-
+    MomentModule,
+    InfiniteScrollModule
   ],
   providers: [
     ApiService

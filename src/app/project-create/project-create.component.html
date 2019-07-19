@@ -30,10 +30,12 @@
     <!-- Invoice List Start -->
     <div class="col-12 mb-30">
 
-      <app-placeholder-loading *ngIf="loading.repos"></app-placeholder-loading>
-
       <div *ngIf="repos.length" class="table-responsive">
-        <table class="project-create-table table table-bordered mb-0">
+        <table infiniteScroll
+               [infiniteScrollDistance]="2"
+               [infiniteScrollThrottle]="50"
+               (scrolled)="fetchSelectedOrgReposNextPage()"
+               [infiniteScrollDisabled]="loading.fetchOrgRepos ||  loadedAllRepos" class="project-create-table table table-bordered mb-0">
           <!-- Table Head Start -->
           <thead>
           <tr>
@@ -80,6 +82,8 @@
 
         </table>
       </div>
+      <app-placeholder-loading *ngIf="loading.repos"></app-placeholder-loading>
+
     </div><!-- Invoice List End -->
 
   </div>

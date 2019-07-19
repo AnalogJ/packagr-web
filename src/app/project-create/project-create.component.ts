@@ -16,8 +16,12 @@ export class ProjectCreateComponent implements OnInit {
   loading: {[comp: string]: boolean; } = {
     repos: true,
     projects: true,
-    createProject: false
+    createProject: false,
   };
+
+  currentReposPage: number = 1;
+  loadedAllRepos: boolean = false;
+
 
   activeOrg: Organization = new Organization();
   repos: Repository[] =  [];
@@ -43,7 +47,29 @@ export class ProjectCreateComponent implements OnInit {
       );
 
     });
+  }
 
+  fetchSelectedOrgReposNextPage() {
+    if (this.loading.repos) { return; }
+    if (this.loadedAllRepos) { return; }
+
+    this.loading.repos = true;
+    this.currentReposPage += 1;
+    this.apiService.fetchOrgRepos({
+      installationId: this.activeOrg.installationId
+    }, this.currentReposPage)
+      .subscribe(
+        data => {
+          console.log(data);
+          if (data.length === 0) {
+            this.loadedAllRepos = true;
+          } else {
+            this.repos = this.repos.concat(data);
+          }
+        },
+        error => this.commonService.addAlert(new Alert('Error retrieving organization repositories', error.message)),
+        () => this.loading.repos = false
+      );
 
   }
 
