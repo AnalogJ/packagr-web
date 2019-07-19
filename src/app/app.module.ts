@@ -67,7 +67,7 @@ export function getToken() {
       config: {
         tokenGetter: getToken,
         authScheme: 'JWT ',
-        whitelistedDomains: ['packagr.io', 'beta.packagr.io', 'localhost:4000', 'localhost:3000'],
+        whitelistedDomains: ['api.packagr.io', 'localhost:3000', 'www.packagr.io', 'beta.packagr.io', 'localhost:4000'],
         blacklistedRoutes: [],
         throwNoTokenError: false,
         skipWhenExpired: true
