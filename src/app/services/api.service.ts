@@ -141,8 +141,10 @@ export class ApiService {
       .pipe(catchError(this.handleError));
   }
 
-  jobStart(org: string, repo: string, prNumber: string, settings?: any): Observable<any>{
-    return this.http.post(`${AppSettings.API_ENDPOINT}/job/${this.serviceType()}/${org}/${repo}/${prNumber}`, settings || {})
+  jobStart(org: string, repo: string, prNumber: string, settings: any, queryParams): Observable<any> {
+    return this.http.post(`${AppSettings.API_ENDPOINT}/job/${this.serviceType()}/${org}/${repo}/${prNumber}`, settings, {
+      params: queryParams
+    })
       .pipe(catchError(this.handleError));
   }
   //
