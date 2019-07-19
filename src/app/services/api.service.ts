@@ -140,12 +140,11 @@ export class ApiService {
     })
       .pipe(catchError(this.handleError));
   }
-  //
-  // publishProject(orgId:string, repoId:string, prNumber:number, settings?: any): Observable<any>{
-  //   return this.authHttp.post(`${AppSettings.API_ENDPOINT}/publish/${this.serviceType()}/${orgId}/${repoId}/${prNumber}`, settings || {})
-  //       .map(this.extractData)
-  //       .catch(this.handleError);
-  // }
+
+  jobStart(org: string, repo: string, prNumber: string, settings?: any): Observable<any>{
+    return this.http.post(`${AppSettings.API_ENDPOINT}/job/${this.serviceType()}/${org}/${repo}/${prNumber}`, settings || {})
+      .pipe(catchError(this.handleError));
+  }
   //
   // getPublishLogs(orgId:string, repoId: string, prNumber: number, nextToken?: string): Observable<any> {
   //   let params: URLSearchParams = new URLSearchParams();

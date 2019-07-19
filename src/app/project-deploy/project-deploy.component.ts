@@ -16,6 +16,7 @@ export class ProjectDeployComponent implements OnInit {
   loading: {[comp: string]: boolean} = {
     pullrequest: true,
     project: true,
+    createRelease: false
   }
 
   repo: string;
@@ -58,9 +59,20 @@ export class ProjectDeployComponent implements OnInit {
         error => this.commonService.addAlert(new Alert('Error retrieving project', error.message)),
         () => this.loading.project = false
       );
+  }
 
-
-
+  createRelease() {
+    // TODO: this function should also send version increment & custom changelog.
+    this.loading.createRelease = true;
+    this.apiService.jobStart(this.org, this.repo, this.prNumber, {versionIncr: this.versionIncr})
+      .subscribe(
+        data => {
+          console.log("TASK/JOB DATA", data);
+          // this.router.navigate([`/${this.apiService.serviceType()}/${this.org}/${this.repo}/pullrequests/${this.prNumber}/logs`])
+        },
+        error => this.commonService.addAlert(new Alert('Error creating new release', error.message)),
+        () => this.loading.createRelease = false
+      );
   }
 
 }
