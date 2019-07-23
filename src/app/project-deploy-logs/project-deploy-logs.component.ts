@@ -29,7 +29,7 @@ export class ProjectDeployLogsComponent implements OnInit, OnDestroy {
   projectData: Project;
   pullRequestData: PullRequest;
   jobData: Job;
-  logs: Array<any> = [];
+  logs: Array<{stream: string, line: string }> = [];
 
 
   logSubscription: Subscription;
@@ -109,10 +109,10 @@ export class ProjectDeployLogsComponent implements OnInit, OnDestroy {
             }
 
             // container is running or stopped
-            if (!data.Lines || data.Lines.length === 0){
+            if (!data.lines || data.lines.length === 0) {
               this.logSubscription.unsubscribe();
             } else {
-              this.logs = this.logs.concat(data.Lines);
+              this.logs = this.logs.concat(data.lines);
             }
           },
           error => {
