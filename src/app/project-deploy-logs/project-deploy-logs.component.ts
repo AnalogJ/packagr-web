@@ -102,7 +102,7 @@ export class ProjectDeployLogsComponent implements OnInit, OnDestroy {
         )
         .subscribe(
           data => {
-            this.jobData.status = data.status;
+            this.jobData.status = data.state;
 
             if (this.jobData.status === 'PENDING') {
               return;
