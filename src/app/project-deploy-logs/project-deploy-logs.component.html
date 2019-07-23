@@ -10,7 +10,7 @@
     <!-- Page Heading Start -->
     <div class="col-12 col-lg-auto mb-20">
       <div class="page-heading">
-        <h3>Deploy Logs<span>/ <a target="_blank" [href]="pullRequestData.link">{{projectData.org}}/{{projectData.repo}} #{{prNumber}} <fa-icon [icon]="['fab', 'github']"></fa-icon></a> </span> </h3>
+        <h3>Deploy Logs<span>/ <a *ngIf="pullRequestData" target="_blank" [href]="pullRequestData.link">{{projectData.org}}/{{projectData.repo}} #{{prNumber}} <fa-icon [icon]="['fab', 'github']"></fa-icon></a> </span> </h3>
 
       </div>
     </div><!-- Page Heading End -->
@@ -67,7 +67,7 @@
     <!--Project Info End-->
 
     <!--Release Info Start-->
-    <div class="col-lg-10 col-12 mb-20">
+    <div class="col-lg-12 col-12 mb-20">
       <div class="box">
         <div class="box-head">
           <h4 class="title">Deploy Logs</h4>

@@ -20,7 +20,7 @@ const routes: Routes = [
   { path: ':serviceType/:org/create', component: ProjectCreateComponent, canActivate: [AuthGuard] },
   { path: ':serviceType/:org/:repo/edit', component: ProjectEditComponent, canActivate: [AuthGuard] },
   { path: ':serviceType/:org/:repo/pr/:prNumber', component: ProjectDeployComponent, canActivate: [AuthGuard] },
-  { path: ':serviceType/:orgId/:repo/pr/:prNumber/:jobId', component: ProjectDeployLogsComponent, canActivate: [AuthGuard] },
+  { path: ':serviceType/:org/:repo/pr/:prNumber/:jobId', component: ProjectDeployLogsComponent, canActivate: [AuthGuard] },
 
   { path: '**', redirectTo: 'login' }
 ];
