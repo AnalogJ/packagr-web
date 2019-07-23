@@ -64,7 +64,7 @@ export class ProjectDeployComponent implements OnInit {
   createRelease() {
     // TODO: this function should also send version increment & custom changelog.
     this.loading.createRelease = true;
-    this.apiService.jobStart(this.org, this.repo, this.prNumber, {versionIncr: this.versionIncr},
+    this.apiService.startJob(this.org, this.repo, this.prNumber, {versionIncr: this.versionIncr},
       { installationId: this.projectData.installation.id })
       .subscribe(
         data => {

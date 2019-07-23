@@ -9,6 +9,7 @@ import {Repository} from '../models/repository';
 import {User} from '../models/user';
 import {Project} from '../models/project';
 import {PullRequest} from '../models/pull-request';
+import {Job} from '../models/job';
 
 @Injectable()
 export class ApiService {
@@ -141,23 +142,23 @@ export class ApiService {
       .pipe(catchError(this.handleError));
   }
 
-  jobStart(org: string, repo: string, prNumber: string, settings: any, queryParams): Observable<any> {
-    return this.http.post(`${AppSettings.API_ENDPOINT}/job/${this.serviceType()}/${org}/${repo}/${prNumber}`, settings, {
+  startJob(org: string, repo: string, prNumber: string, settings: any, queryParams): Observable<Job> {
+    return this.http.post<Job>(`${AppSettings.API_ENDPOINT}/job/${this.serviceType()}/${org}/${repo}/${prNumber}`, settings, {
       params: queryParams
     })
       .pipe(catchError(this.handleError));
   }
-  //
-  // getPublishLogs(orgId:string, repoId: string, prNumber: number, nextToken?: string): Observable<any> {
-  //   let params: URLSearchParams = new URLSearchParams();
-  //   if(nextToken){
-  //     params.set('NextToken', nextToken);
-  //   }
-  //   return this.authHttp.get(`${AppSettings.API_ENDPOINT}/logs/${this.serviceType()}/${orgId}/${repoId}/${prNumber}`,{ search: params })
-  //       .map(this.extractData)
-  //       .catch(this.handleError);
-  // }
-  //
+
+  getJobLogs(org: string, repo: string, prNumber: string, jobId: string, nextToken?: string): Observable<any> {
+    const params: any = {};
+    if (nextToken) {
+      params.NextToken = nextToken;
+    }
+    return this.http.get(`${AppSettings.API_ENDPOINT}/job/${this.serviceType()}/${org}/${repo}/${prNumber}/${jobId}/logs`, { params })
+      .pipe(catchError(this.handleError));
+
+  }
+
   fetchUser(): Observable<User> {
     const params = new HttpParams();
     const url = `${AppSettings.API_ENDPOINT}/fetch/${this.serviceType()}/user`;

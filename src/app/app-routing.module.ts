@@ -7,6 +7,7 @@ import { AuthGuard } from './guards/auth-guard.service';
 import {ProjectEditComponent} from './project-edit/project-edit.component';
 import {ProjectCreateComponent} from './project-create/project-create.component';
 import {ProjectDeployComponent} from './project-deploy/project-deploy.component';
+import {ProjectDeployLogsComponent} from './project-deploy-logs/project-deploy-logs.component';
 
 const routes: Routes = [
   { path: 'login', component: AuthConnectComponent },
@@ -19,7 +20,7 @@ const routes: Routes = [
   { path: ':serviceType/:org/create', component: ProjectCreateComponent, canActivate: [AuthGuard] },
   { path: ':serviceType/:org/:repo/edit', component: ProjectEditComponent, canActivate: [AuthGuard] },
   { path: ':serviceType/:org/:repo/pr/:prNumber', component: ProjectDeployComponent, canActivate: [AuthGuard] },
-  // { path: ':serviceType/:orgId/:repo/pr/:prNumber/job', component: ProjectDeployLogsComponent, canActivate: [AuthGuard] },
+  { path: ':serviceType/:orgId/:repo/pr/:prNumber/:jobId', component: ProjectDeployLogsComponent, canActivate: [AuthGuard] },
 
   { path: '**', redirectTo: 'login' }
 ];
