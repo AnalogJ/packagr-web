@@ -98,14 +98,16 @@ export class ProjectDeployLogsComponent implements OnInit, OnDestroy {
       }
 
       // we need to send timestamp in milliseconds, not seconds.
-      this.apiService.getJobLogs(this.org, this.repo, this.prNumber, this.jobId, queryParams
-        )
+      this.apiService.getJobLogs(this.org, this.repo, this.prNumber, this.jobId, queryParams)
         .subscribe(
           data => {
             this.jobData.status = data.state;
 
             if (this.jobData.status === 'PENDING') {
               return;
+            }
+            if (data.nextToken) {
+              this.nextToken = data.nextToken;
             }
 
             // container is running or stopped
