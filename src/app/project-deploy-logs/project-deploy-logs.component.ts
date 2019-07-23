@@ -90,12 +90,16 @@ export class ProjectDeployLogsComponent implements OnInit, OnDestroy {
       }
       this.loading.logs = true;
 
+      const queryParams: any = {
+        installationId: this.projectData.installation.id,
+      };
+      if (this.nextToken) {
+        queryParams.nextToken = this.nextToken;
+      }
+
       // we need to send timestamp in milliseconds, not seconds.
-      this.apiService.getJobLogs(this.org, this.repo, this.prNumber, this.jobId,
-        {
-          nextToken: (this.nextToken === '' ? null : this.nextToken),
-          installationId: this.projectData.installation.id,
-        })
+      this.apiService.getJobLogs(this.org, this.repo, this.prNumber, this.jobId, queryParams
+        )
         .subscribe(
           data => {
             this.jobData.status = data.status;
