@@ -17,7 +17,7 @@ export class ProjectDeployLogsComponent implements OnInit, OnDestroy {
   loading = {
     logs: true,
     project: true,
-    pullRequest: true,
+    pullrequest: true,
   };
 
   repo: string;
@@ -60,7 +60,7 @@ export class ProjectDeployLogsComponent implements OnInit, OnDestroy {
                 this.pullRequestData = prData;
               },
               error => this.commonService.addAlert(new Alert('Error retrieving pr data', error.message)),
-              () => this.loading.pullRequest = false
+              () => this.loading.pullrequest = false
             );
 
 

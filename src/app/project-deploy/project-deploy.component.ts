@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ApiService} from '../services/api.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Project} from '../models/project';
 import {PullRequest} from '../models/pull-request';
 import {CommonService} from '../services/common.service';
@@ -27,7 +27,7 @@ export class ProjectDeployComponent implements OnInit {
 
   optionDockerImages = AppSettings.DOCKER_IMAGES;
   versionIncr: string = 'patch';
-  constructor(private apiService: ApiService, private commonService: CommonService, private activatedRoute: ActivatedRoute) { }
+  constructor(private apiService: ApiService, private commonService: CommonService, private activatedRoute: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     this.repo = this.activatedRoute.snapshot.params.repo;
@@ -69,7 +69,7 @@ export class ProjectDeployComponent implements OnInit {
       .subscribe(
         data => {
           console.log("TASK/JOB DATA", data);
-          // this.router.navigate([`/${this.apiService.serviceType()}/${this.org}/${this.repo}/pullrequests/${this.prNumber}/logs`])
+          this.router.navigate([`/${this.apiService.serviceType()}/${this.org}/${this.repo}/pr/${this.prNumber}/${data.id}`]);
         },
         error => this.commonService.addAlert(new Alert('Error creating new release', error.message)),
         () => this.loading.createRelease = false

@@ -1,4 +1,5 @@
 export class Job {
+  id: number;
 
   projectId: string;
   taskId: string;
