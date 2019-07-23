@@ -149,12 +149,13 @@ export class ApiService {
       .pipe(catchError(this.handleError));
   }
 
-  getJobLogs(org: string, repo: string, prNumber: string, jobId: string, nextToken?: string): Observable<any> {
-    const params: any = {};
-    if (nextToken) {
-      params.NextToken = nextToken;
-    }
-    return this.http.get(`${AppSettings.API_ENDPOINT}/job/${this.serviceType()}/${org}/${repo}/${prNumber}/${jobId}/logs`, { params })
+  getJobLogs(org: string, repo: string, prNumber: string, jobId: string, queryParams: any): Observable<any> {
+    // const params: any = {};
+    // if (nextToken) {
+    //   params.NextToken = nextToken;
+    // }
+    return this.http.get(`${AppSettings.API_ENDPOINT}/job/${this.serviceType()}/${org}/${repo}/${prNumber}/${jobId}/logs`,
+      { params: queryParams })
       .pipe(catchError(this.handleError));
 
   }

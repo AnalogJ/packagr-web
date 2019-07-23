@@ -82,7 +82,11 @@ export class ProjectDeployLogsComponent implements OnInit, OnDestroy {
     const logTimer = timer(0, 3000); // start at 0ms and re-run every 3 seconds (3000ms)
     this.logSubscription = logTimer.subscribe(t => {
       // we need to send timestamp in milliseconds, not seconds.
-      this.apiService.getJobLogs(this.org, this.repo, this.prNumber, this.jobId, (this.nextToken === '' ? null : this.nextToken))
+      this.apiService.getJobLogs(this.org, this.repo, this.prNumber, this.jobId,
+        {
+          nextToken: (this.nextToken === '' ? null : this.nextToken),
+          installationId: this.projectData.installation.id,
+        })
         .subscribe(
           data => {
             this.jobData.status = data.status;
