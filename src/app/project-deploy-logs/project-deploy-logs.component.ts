@@ -15,7 +15,7 @@ import {Subscription, timer} from 'rxjs';
 })
 export class ProjectDeployLogsComponent implements OnInit, OnDestroy {
   loading = {
-    logs: true,
+    logs: false,
     project: true,
     pullrequest: true,
   };
@@ -84,7 +84,11 @@ export class ProjectDeployLogsComponent implements OnInit, OnDestroy {
     const logTimer = timer(0, 3000); // start at 0ms and re-run every 3 seconds (3000ms)
     this.logSubscription = logTimer.subscribe(t => {
       // dont make new requests if theres already a pending request for logs.
-      if (this.loading.logs) { return; }
+      if (this.loading.logs) {
+        console.log('Already requested logs, skipping.')
+        return;
+      }
+      this.loading.logs = true;
 
       // we need to send timestamp in milliseconds, not seconds.
       this.apiService.getJobLogs(this.org, this.repo, this.prNumber, this.jobId,
