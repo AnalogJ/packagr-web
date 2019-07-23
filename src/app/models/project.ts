@@ -1,3 +1,5 @@
+import {Job} from './job';
+
 export class Project {
   serviceType: string;
   org: string;
@@ -21,4 +23,6 @@ export class Project {
   };
   status: any;
   private: boolean;
+
+  jobs: Job[];
 }

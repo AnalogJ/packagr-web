@@ -48,6 +48,7 @@ export class ProjectDeployLogsComponent implements OnInit, OnDestroy {
         data => {
           console.log(data);
           this.projectData = data;
+          this.jobData = this.projectData.jobs[0];
           this.apiService.fetchOrgRepoPullRequest({
             installationId: this.projectData.installation.id,
             org: this.org,
