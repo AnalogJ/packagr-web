@@ -73,6 +73,8 @@
           <h4 class="title">Deploy Logs</h4>
         </div>
         <div class="box-body">
+          <app-placeholder-loading *ngIf="loading.logs"></app-placeholder-loading>
+
 
           <div class="history">
             <div *ngFor="let log of logs">
