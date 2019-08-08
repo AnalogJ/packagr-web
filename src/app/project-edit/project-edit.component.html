@@ -79,8 +79,14 @@
               </div>
 
               <div class="col-12 mb-20">
-                <input (click)="saveSettings()" type="submit" value="submit" class="button button-primary">
-                <input type="submit" value="cancel" class="button button-danger">
+
+                <app-loading-button (buttonClicked)="saveSettings()" [buttonClass]="'button button-primary'" [isLoading]="loading.saveSettings">
+                  Submit
+                </app-loading-button>
+
+                <app-loading-button [buttonClass]="'button button-danger'">
+                  Cancel
+                </app-loading-button>
               </div>
 
             </div>
@@ -127,8 +133,14 @@
               </div>
 
               <div [collapse]="hideAddSecretForm" class="col-12 mb-20">
-                <input (click)="saveSecret()" type="submit" value="submit" class="button button-primary">
-                <input (click)="cancelSecret()" type="submit" value="cancel" class="button button-danger">
+
+                <app-loading-button (buttonClicked)="saveSecret()" [buttonClass]="'button button-primary'" [isLoading]="loading.saveSecret">
+                  Submit
+                </app-loading-button>
+
+                <app-loading-button (buttonClicked)="cancelSecret()" [buttonClass]="'button button-danger'">
+                  Cancel
+                </app-loading-button>
               </div>
             </div>
 

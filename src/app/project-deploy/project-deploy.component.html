@@ -117,7 +117,9 @@
               </div>
 
               <div class="col-12 mb-20">
-                <input (click)="createRelease()" type="submit" value="Create Release from Pull Request" class="button button-danger">
+                <app-loading-button (buttonClicked)="createRelease()" [buttonClass]="'button button-danger'" [isLoading]="loading.createRelease">
+                  Create Release from Pull Request
+                </app-loading-button>
               </div>
 
             </div>
