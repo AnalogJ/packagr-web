@@ -17,7 +17,10 @@
     <!-- Page Button Group Start -->
     <div class="col-12 col-lg-auto mb-20">
       <div class="buttons-group">
-        <button *ngIf="projectData" (click)="deleteProject()" class="button button-outline button-danger">Delete Project</button>
+
+        <app-loading-button *ngIf="projectData" (buttonClicked)="deleteProject()" [buttonClass]="'button button-outline button-danger'" [isLoading]="loading.deleteProject">
+          Delete Project
+        </app-loading-button>
       </div>
     </div><!-- Page Button Group End -->
 

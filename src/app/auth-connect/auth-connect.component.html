@@ -12,9 +12,12 @@
             <p>If you have already authorized either GitHub or Bitbucket on your Packagr account, then you can click either button to sign in.</p>
           </div>
 
-          <button (click)="loginWith('gh')" class="button button-github"><span><fa-icon [icon]="['fab', 'github']"></fa-icon> Github</span></button>
-          <button (click)="loginWith('bb')" class="button button-playstation"><span><fa-icon [icon]="['fab', 'bitbucket']"></fa-icon> BitBucket</span></button>
-
+          <app-loading-button (buttonClicked)="loginWith('gh')" [buttonClass]="'button button-github'" [isLoading]="loading.gh">
+            <span><fa-icon [icon]="['fab', 'github']"></fa-icon> Github</span>
+          </app-loading-button>
+          <app-loading-button (buttonClicked)="loginWith('bb')" [buttonClass]="'button button-playstation'" [isLoading]="loading.bb">
+            <span><fa-icon [icon]="['fab', 'bitbucket']"></fa-icon> Bitbucket</span>
+          </app-loading-button>
         </div>
       </div>
 

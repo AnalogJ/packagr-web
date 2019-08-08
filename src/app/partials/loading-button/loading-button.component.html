@@ -1,0 +1,6 @@
+<button [attr.disabled]="isLoading ? '' : null" [ngClass]="buttonClass" (click)="onButtonClicked($event)">
+  <span *ngIf="isLoading" class="spinner-grow spinner-sm d-inline-block mr-5"></span>
+  <span *ngIf="isLoading">Loading...</span>
+
+  <ng-content *ngIf="!isLoading"></ng-content>
+</button>
