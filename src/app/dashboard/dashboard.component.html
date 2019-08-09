@@ -140,39 +140,19 @@
               <fa-icon [routerLink]="'/gh/' + activeOrg.slug + '/create'" [icon]="['far', 'plus-square']" size="lg" class="cursor-pointer text-success"></fa-icon>
             </span></h4>
         </div>
-        <div class="box-body p-0">
+        <div class="box-body">
 
           <app-placeholder-loading *ngIf="loading.projects"></app-placeholder-loading>
+          <ul *ngIf="projects.length" class="list-group">
+            <li [ngClass]="{'active': activeProject == project }" *ngFor="let project of projects" (click)="changeActiveProject(project)" class="list-group-item">
+              <div class="d-flex w-100 justify-content-between">
+                <p class="mb-1">{{project.org}}/{{project.repo}}</p>
+                <small [routerLink]="'/' + project.serviceType + '/' + project.org + '/' + project.repo + '/edit'"><fa-icon [icon]="['fas', 'cog']" [ngClass]="{'text-heading': activeProject == project, 'text-primary': activeProject != project }" class="align-middle cursor-pointer"></fa-icon></small>
+              </div>
+            </li>
+          </ul>
 
-          <div *ngIf="projects.length">
-            <!--Todo List Start-->
-            <ul  class="todo-list">
 
-              <!--Todo Item Start-->
-              <li *ngFor="let project of projects">
-                <div class="list-action">
-                  <button class="status"><i class="zmdi zmdi-star-outline"></i></button>
-                </div>
-                <div class="list-content cursor-pointer" (click)="changeActiveProject(project)">
-                  <p>{{project.org}}/{{project.repo}}</p>
-                </div>
-                <div class="list-action right">
-                  <span [routerLink]="'/' + project.serviceType + '/' + project.org + '/' + project.repo + '/edit'" class="float-right"><fa-icon [icon]="['fas', 'cog']" class="cursor-pointer text-primary"></fa-icon></span>
-                </div>
-              </li>
-              <!--Todo Item End-->
-
-            </ul>
-            <!--Todo List End-->
-
-            <!--Add Todo List Start-->
-            <form action="#" class="todo-list-add-new" data-date="false">
-              <label class="status"><input type="checkbox"><i class="icon zmdi zmdi-star-outline"></i></label>
-              <input class="content" type="text" placeholder="Type new Task">
-              <button class="submit"><i class="zmdi zmdi-plus-circle-o"></i></button>
-            </form>
-            <!--Add Todo List End-->
-          </div>
         </div>
       </div>
     </div><!-- Project List End -->
