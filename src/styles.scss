@@ -13,3 +13,38 @@
 .project-create-table.table tbody > tr > th {
   white-space: normal;
 }
+
+
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+/* Auth Connect/Callback - Modal */
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+
+
+.modal {
+  text-align: center;
+}
+
+@media screen and (min-width: 768px) {
+  .modal:before {
+    display: inline-block;
+    vertical-align: middle;
+    content: " ";
+    height: 100%;
+  }
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+.full-page-bg-wrapper{position: fixed; top: 0; right: 0; bottom: 0; left: 0;}
+.full-page-bg {
+  background: url('assets/images/login/light-industrial_1600x900.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: 100%;
+  width:100%
+}

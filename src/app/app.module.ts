@@ -18,6 +18,7 @@ import { MomentModule } from 'ngx-moment';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 // Application Components/Services/Modules
@@ -82,7 +83,8 @@ export function getToken() {
     CollapseModule.forRoot(),
     TypeaheadModule.forRoot(),
     MomentModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    ModalModule.forRoot()
   ],
   providers: [
     ApiService

@@ -1,20 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { ActivatedRoute } from '@angular/router';
-import {Router, Params} from '@angular/router'
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import {Router, Params} from '@angular/router';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-auth-callback',
   templateUrl: './auth-callback.component.html',
   styleUrls: ['./auth-callback.component.sass']
 })
-export class AuthCallbackComponent implements OnInit {
-
-  constructor(private apiService: ApiService, private router: Router, private activatedRoute: ActivatedRoute) { }
+export class AuthCallbackComponent implements AfterViewInit {
+  @ViewChild('childModal', { static: false }) childModal: ModalDirective;
 
   successfulCallback = true;
 
-  ngOnInit() {
+  constructor(private modalService: BsModalService, private apiService: ApiService, private router: Router, private activatedRoute: ActivatedRoute) { }
+
+  ngAfterViewInit() {
+    this.childModal.show();
 
     // process the query string for the code
     console.log('GETTING QUERY STRING PARAMS');
@@ -36,10 +40,12 @@ export class AuthCallbackComponent implements OnInit {
 
           this.router.navigate(['/dashboard']);
         },
-        error => console.log(error)
+        error => {
+          this.successfulCallback = false;
+          console.log(error);
+        }
       );
   }
-
   // loginWith(serviceType){
   //   console.log(serviceType);
   //   this.loading[serviceType] = true;
