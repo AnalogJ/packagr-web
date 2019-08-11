@@ -56,7 +56,9 @@
               <td>{{repo.name}}</td>
               <td><p>{{repo.description}}</p></td>
               <td>{{repo.updatedAt | amTimeAgo }}</td>
-              <td>{{repo.language}}</td>
+              <td>
+                <span class="badge badge-outline badge-primary">{{repo.language}}</span>
+              </td>
               <td style="text-align: center;">
                 <fa-icon *ngIf="repo.private" [icon]="['fas', 'lock']" size="lg" class="cursor-pointer text-danger"></fa-icon>
                 <fa-icon *ngIf="!repo.private" [icon]="['fas', 'globe-americas']" size="lg" class="cursor-pointer text-success"></fa-icon>

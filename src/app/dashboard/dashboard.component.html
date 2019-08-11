@@ -183,7 +183,23 @@
                   <span *ngFor="let label of pr.labels" class="badge badge-dark">{{label}}</span>
                 </div>
                 <div class="col-2">
-                  <button [routerLink]="'/'+pr.serviceType + '/' + activeProject.org + '/' + activeProject.repo + '/pr/' + pr.id" class="float-right button button-outline button-primary">Deploy</button>
+
+                  <div class="btn-group" dropdown>
+                    <button [routerLink]="'/'+pr.serviceType + '/' + activeProject.org + '/' + activeProject.repo + '/pr/' + pr.id" type="button" class="btn button-outline button-primary">Deploy</button>
+
+
+                    <button *ngIf="hasPrLogs(pr.id)" id="button-split" type="button" dropdownToggle class="btn button-outline button-primary dropdown-toggle dropdown-toggle-split"
+                            aria-controls="dropdown-split">
+                      <span class="caret"></span>
+                    </button>
+                    <ul id="dropdown-split" *dropdownMenu class="dropdown-menu"
+                        role="menu" aria-labelledby="button-split">
+                      <li *ngFor="let job of prLogs(pr.id)" ole="menuitem">
+                        <a class="dropdown-item" [routerLink]="'/'+pr.serviceType + '/' + activeProject.org + '/' + activeProject.repo + '/pr/' + pr.id + '/' + job.id">Build #{{job.id}} Logs</a>
+                      </li>
+                    </ul>
+                  </div>
+
                 </div>
               </div>
 

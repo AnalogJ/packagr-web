@@ -8,6 +8,7 @@ import {Project} from '../models/project';
 import {Router} from '@angular/router';
 import {PullRequest} from '../models/pull-request';
 import {Alert} from '../models/alert';
+import {Job} from '../models/job';
 
 @Component({
   selector: 'app-dashboard',
@@ -39,6 +40,7 @@ export class DashboardComponent implements OnInit {
 
   changeActiveProject(project: Project) {
     this.activeProject = project;
+    this.activeProjectPRs = [];
     this.getProjectPullRequests();
   }
 
@@ -76,6 +78,18 @@ export class DashboardComponent implements OnInit {
       error => this.commonService.addAlert(new Alert('Error retrieving pull requests', error.message)),
       () => this.loading.pullrequests = false
     );
+  }
+
+  hasPrLogs(pr): boolean {
+    return this.activeProject.jobs.some(j => {
+      return j.prId === pr;
+    });
+  }
+
+  prLogs(pr): Job[] {
+    return this.activeProject.jobs.filter(j => {
+      return j.prId === pr;
+    });
   }
 
 }
