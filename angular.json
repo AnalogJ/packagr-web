@@ -28,9 +28,9 @@
             ],
             "styles": [
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "./node_modules/highlight.js/styles/obsidian.css",
               "src/assets/scss/helper.scss",
               "src/assets/scss/style.scss",
+              "./node_modules/highlight.js/styles/obsidian.css",
               "src/styles.scss"
             ],
             "scripts": []
