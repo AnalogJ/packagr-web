@@ -80,15 +80,15 @@ export class DashboardComponent implements OnInit {
     );
   }
 
-  hasPrLogs(pr): boolean {
+  hasPrLogs(pr: string): boolean {
     return this.activeProject.jobs.some(j => {
-      return j.prId === pr;
+      return j.prId === pr.toString();
     });
   }
 
-  prLogs(pr): Job[] {
+  prLogs(pr: string): Job[] {
     return this.activeProject.jobs.filter(j => {
-      return j.prId === pr;
+      return j.prId === pr.toString();
     });
   }
 
