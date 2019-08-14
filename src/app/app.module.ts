@@ -20,6 +20,20 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { HighlightModule } from 'ngx-highlightjs';
+import shell from 'highlight.js/lib/languages/shell';
+
+
+/**
+ * Import every language you wish to highlight here
+ * NOTE: The name of each language must match the file name its imported from
+ */
+export function hljsLanguages() {
+  return [
+    {name: 'shell', func: shell}
+  ];
+}
+
 
 // Application Components/Services/Modules
 import { ApiService } from './services/api.service';
@@ -84,7 +98,10 @@ export function getToken() {
     TypeaheadModule.forRoot(),
     MomentModule,
     InfiniteScrollModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    HighlightModule.forRoot({
+      languages: hljsLanguages
+    })
   ],
   providers: [
     ApiService

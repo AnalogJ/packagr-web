@@ -77,8 +77,8 @@
 
 
           <div class="history">
-            <div *ngFor="let log of logs">
-              <span [ngClass]="log.stream">{{log.line}}</span>
+            <div highlightChildren *ngFor="let log of logs">
+              <pre><code [textContent]="log.line"></code></pre>
             </div>
           </div>
         </div>
