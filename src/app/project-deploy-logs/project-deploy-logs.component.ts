@@ -79,6 +79,9 @@ export class ProjectDeployLogsComponent implements OnInit, OnDestroy {
     this.logSubscription.unsubscribe();
   }
 
+  processLines(): string {
+    return this.logs.map(l => l.line).join('\n');
+  }
 
   subscribeJobLogs() {
     const logTimer = timer(0, 3000); // start at 0ms and re-run every 3 seconds (3000ms)
