@@ -22,6 +22,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { HighlightModule } from 'ngx-highlightjs';
 import shell from 'highlight.js/lib/languages/shell';
+import { ToastrModule } from 'ngx-toastr';
 
 
 /**
@@ -101,7 +102,8 @@ export function getToken() {
     ModalModule.forRoot(),
     HighlightModule.forRoot({
       languages: hljsLanguages
-    })
+    }),
+    ToastrModule.forRoot()
   ],
   providers: [
     ApiService

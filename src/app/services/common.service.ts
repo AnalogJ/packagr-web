@@ -4,6 +4,7 @@ import {Organization} from '../models/organization';
 import {User} from '../models/user';
 import {ApiService} from './api.service';
 import {Alert} from '../models/alert';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class CommonService {
   private alertsSource = new BehaviorSubject([]);
   currentAlerts = this.alertsSource.asObservable();
 
-  constructor(private apiService: ApiService) {
+  constructor(private apiService: ApiService, private toastr: ToastrService) {
     this.apiService.fetchUser().subscribe(
       data => {
         console.log(data);
@@ -43,6 +44,8 @@ export class CommonService {
     const alerts = this.alertsSource.getValue();
     alerts.push(newAlert);
     this.alertsSource.next(alerts);
+
+    this.toastr.error(newAlert.msg, newAlert.title);
   }
 
 
