@@ -10,7 +10,7 @@
     <!-- Page Heading Start -->
     <div class="col-12 col-lg-auto mb-20">
       <div class="page-heading">
-        <h3 class="title">Dashboard <span>/ {{activeOrg.name}}</span></h3>
+        <h3 class="title">Dashboard <span>/ <a *ngIf="activeOrg" target="_blank" [href]="activeOrg.url">{{activeOrg.name}} <fa-icon [icon]="['fab', 'github']"></fa-icon></a></span></h3>
       </div>
     </div><!-- Page Heading End -->
 
@@ -146,7 +146,7 @@
           <ul *ngIf="projects.length" class="list-group">
             <li [ngClass]="{'active': activeProject == project }" *ngFor="let project of projects" (click)="changeActiveProject(project)" class="list-group-item">
               <div class="d-flex w-100 justify-content-between">
-                <p class="mb-1">{{project.org}}/{{project.repo}}</p>
+                <p class="mb-1">{{project.repo}}</p>
                 <small [routerLink]="'/' + project.serviceType + '/' + project.org + '/' + project.repo + '/edit'"><fa-icon [icon]="['fas', 'cog']" [ngClass]="{'text-heading': activeProject == project, 'text-primary': activeProject != project }" class="align-middle cursor-pointer"></fa-icon></small>
               </div>
             </li>

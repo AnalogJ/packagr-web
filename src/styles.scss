@@ -1,6 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
 
 
+/* Only show on hover */
+.only-show-on-hover {
+  visibility: hidden;
+}
+*:hover > .only-show-on-hover  {
+  visibility: visible;
+}
+
 
 .cursor-pointer {
   cursor: pointer;
@@ -22,6 +30,13 @@
 .org-icon {
   background-color: white;
   max-width: 40px;
+}
+
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+/* Header - Logo */
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+.logo-wrapper {
+  max-width: 160px;
 }
 
 

@@ -10,7 +10,7 @@
     <!-- Page Heading Start -->
     <div class="col-12 col-lg-auto mb-20">
       <div class="page-heading">
-        <h3>Add Project <span>/ {{activeOrg.name}}</span></h3>
+        <h3>Add Project <span>/ <a *ngIf="activeOrg" target="_blank" [href]="activeOrg.url">{{activeOrg.name}} <fa-icon [icon]="['fab', 'github']"></fa-icon></a></span></h3>
       </div>
     </div><!-- Page Heading End -->
 
