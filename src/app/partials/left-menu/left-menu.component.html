@@ -5,8 +5,8 @@
 
   <nav class="side-header-menu" id="side-header-menu">
     <ul>
-      <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a [routerLink]="'/gh/' + activeOrg.slug" ><fa-icon [icon]="['fas', 'home']"></fa-icon> <span>Dashboard</span></a></li>
-      <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a [routerLink]="'/gh/' + activeOrg.slug + '/create'" ><fa-icon [icon]="['fas', 'folder-plus']"></fa-icon> <span>Add Project</span></a></li>
+      <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a [routerLink]="'/' + serviceType + '/' + activeOrg.slug" ><fa-icon [icon]="['fas', 'home']"></fa-icon> <span>Dashboard</span></a></li>
+      <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a [routerLink]="'/' + serviceType + '/' + activeOrg.slug + '/create'" ><fa-icon [icon]="['fas', 'folder-plus']"></fa-icon> <span>Add Project</span></a></li>
 
     </ul>
   </nav>

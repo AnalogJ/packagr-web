@@ -31,6 +31,10 @@ export class ProjectCreateComponent implements OnInit {
   ngOnInit() {
     this.commonService.currentActiveOrg.subscribe(activeOrg => {
       this.activeOrg = activeOrg;
+      this.repos = [];
+      this.projects = [];
+      this.currentReposPage = 1;
+      this.loadedAllRepos = false;
 
       this.apiService.fetchOrgRepos({
         installationId: this.activeOrg.installationId
