@@ -15,9 +15,12 @@ export class HeaderComponent implements OnInit {
   activeOrg: Organization = new Organization();
   user: User = new User();
 
+  serviceType: string;
+
   constructor(private commonService: CommonService, private apiService: ApiService) { }
 
   ngOnInit() {
+    this.serviceType = this.apiService.serviceType();
     this.commonService.currentUser.subscribe(user => this.user = user)
     this.commonService.currentActiveOrg.subscribe(activeOrg => this.activeOrg = activeOrg)
 
@@ -29,6 +32,10 @@ export class HeaderComponent implements OnInit {
       },
       error => console.log(error)
     );
+  }
+
+  changeActiveOrg(nextActiveOrg: Organization) {
+    this.commonService.changeActiveOrg(nextActiveOrg);
   }
 
 }

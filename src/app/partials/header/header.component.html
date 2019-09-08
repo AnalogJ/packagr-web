@@ -25,12 +25,15 @@
 
                 <!--Organization Select-->
                 <li dropdown class="adomx-dropdown position-relative col-auto">
-                  <a dropdownToggle><img class="org-select" [src]="activeOrg.imageUrl" alt=""><i class="zmdi zmdi-caret-down drop-arrow"></i> {{activeOrg.name}}</a>
+                  <a dropdownToggle>
+                    <img class="org-icon" [src]="activeOrg.imageUrl" alt="">
+                    <i class="zmdi zmdi-caret-down drop-arrow"></i> {{activeOrg.name}}
+                  </a>
 
                   <!-- Dropdown -->
                   <ul *dropdownMenu class="adomx-dropdown-menu dropdown-menu-language">
                     <li *ngFor="let choice of orgs" >
-                      <a href="#"><img class="org-icon" [src]="choice.imageUrl" alt="">{{choice.name}}</a>
+                      <a (click)="changeActiveOrg(choice)"><img class="org-icon" [src]="choice.imageUrl" alt="">{{choice.name}}</a>
                     </li>
                   </ul>
 
