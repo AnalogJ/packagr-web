@@ -21,6 +21,8 @@ export class DashboardComponent implements OnInit {
     pullrequests: false
   };
 
+
+  serviceType: string = '';
   projects: Project[] = [];
   activeProject: Project = null
   activeProjectPRs: PullRequest[];
@@ -31,6 +33,7 @@ export class DashboardComponent implements OnInit {
   constructor(private commonService: CommonService, private apiService: ApiService, private router: Router) { }
 
   ngOnInit() {
+    this.serviceType = this.apiService.serviceType()
     this.commonService.currentUser.subscribe(user => this.user = user);
     this.commonService.currentActiveOrg.subscribe(activeOrg => {
       this.activeOrg = activeOrg;

@@ -9,6 +9,10 @@
   visibility: visible;
 }
 
+/* force footer to the bottom of the page*/
+.content-body {
+  min-height:100vh;
+}
 
 .cursor-pointer {
   cursor: pointer;
