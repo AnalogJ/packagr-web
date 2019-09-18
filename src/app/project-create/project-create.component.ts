@@ -14,8 +14,8 @@ import {Project} from '../models/project';
 })
 export class ProjectCreateComponent implements OnInit {
   loading: {[comp: string]: boolean; } = {
-    repos: false,
-    projects: false,
+    repos: true,
+    projects: true,
     createProject: false,
   };
 
@@ -36,7 +36,7 @@ export class ProjectCreateComponent implements OnInit {
       this.currentReposPage = 1; // reset, 1 based index (will be incremented by fetch)
       this.loadedAllRepos = false;
 
-      this.fetchActiveOrgReposPaginated();
+      this.fetchActiveOrgRepos();
       this.getProjects();
     });
   }
@@ -51,18 +51,28 @@ export class ProjectCreateComponent implements OnInit {
     );
   }
 
+  fetchActiveOrgRepos() {
+    if (!this.activeOrg) { return; }
+    this.apiService.fetchOrgRepos({
+      installationId: this.activeOrg.installationId
+    }).subscribe(
+        repos => this.repos = repos,
+        error => this.commonService.addAlert(new Alert('Error fetching available repos', error.message)),
+        () => this.loading.repos = false
+      );
+  }
+
   fetchActiveOrgReposPaginated() {
     if (this.loading.repos) { return; }
     if (this.loadedAllRepos) { return; }
-    if (!this.activeOrg) { return; }
     this.loading.repos = true;
+    this.currentReposPage += 1;
     this.apiService.fetchOrgRepos({
       installationId: this.activeOrg.installationId
     }, this.currentReposPage)
       .subscribe(
         data => {
           console.log(data);
-          this.currentReposPage += 1;
           if (data.length === 0) {
             this.loadedAllRepos = true;
           } else {
