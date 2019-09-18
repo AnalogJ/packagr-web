@@ -48,6 +48,10 @@ export class DashboardComponent implements OnInit {
   }
 
   getProjects() {
+    if (!this.activeOrg.slug) {
+      return;
+    }
+
     this.loading.projects = true;
 
     this.apiService.getProjects(this.activeOrg.slug).subscribe(
@@ -67,6 +71,10 @@ export class DashboardComponent implements OnInit {
   }
 
   private getProjectPullRequests() {
+    if (!this.activeProject) {
+      return;
+    }
+
     this.loading.pullrequests = true;
     this.activeProjectPRs = [];
     this.apiService.fetchOrgRepoPullRequests({

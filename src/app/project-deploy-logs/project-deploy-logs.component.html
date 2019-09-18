@@ -76,7 +76,7 @@
           <app-placeholder-loading *ngIf="loading.logs"></app-placeholder-loading>
 
 
-          <div *ngIf="!loading.logs" class="history">
+          <div class="history">
             <pre><code [highlight]="processLines()" [languages]="['shell']"></code></pre>
           </div>
         </div>
