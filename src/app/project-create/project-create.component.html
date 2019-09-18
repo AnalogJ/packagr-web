@@ -34,7 +34,7 @@
         <table infiniteScroll
                [infiniteScrollDistance]="2"
                [infiniteScrollThrottle]="50"
-               (scrolled)="fetchSelectedOrgReposNextPage()"
+               (scrolled)="fetchActiveOrgReposPaginated()"
                [infiniteScrollDisabled]="loading.fetchOrgRepos ||  loadedAllRepos" class="project-create-table table table-bordered mb-0">
           <!-- Table Head Start -->
           <thead>

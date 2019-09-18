@@ -33,30 +33,27 @@ export class ProjectCreateComponent implements OnInit {
       this.activeOrg = activeOrg;
       this.repos = [];
       this.projects = [];
-      this.currentReposPage = 1;
+      this.currentReposPage = 0; // reset, 1 based index (will be incremented by fetch)
       this.loadedAllRepos = false;
 
-      this.apiService.fetchOrgRepos({
-        installationId: this.activeOrg.installationId
-      }).subscribe(
-        repos => this.repos = repos,
-        error => this.commonService.addAlert(new Alert('Error fetching available repos', error.message)),
-        () => this.loading.repos = false
-      );
-
-      this.apiService.getProjects(this.activeOrg.slug).subscribe(
-        projects => this.projects = projects,
-        error => this.commonService.addAlert(new Alert('Error retrieving projects', error.message)),
-        () => this.loading.projects = false
-      );
-
+      this.fetchActiveOrgReposPaginated();
+      this.getProjects();
     });
   }
 
-  fetchSelectedOrgReposNextPage() {
+  getProjects() {
+    if (!this.activeOrg) { return; }
+    this.apiService.getProjects(this.activeOrg.slug).subscribe(
+      projects => this.projects = projects,
+      error => this.commonService.addAlert(new Alert('Error retrieving projects', error.message)),
+      () => this.loading.projects = false
+    );
+  }
+
+  fetchActiveOrgReposPaginated() {
     if (this.loading.repos) { return; }
     if (this.loadedAllRepos) { return; }
-
+    if (!this.activeOrg) { return; }
     this.loading.repos = true;
     this.currentReposPage += 1;
     this.apiService.fetchOrgRepos({
