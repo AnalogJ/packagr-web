@@ -55,13 +55,13 @@ export class ProjectCreateComponent implements OnInit {
     if (this.loadedAllRepos) { return; }
     if (!this.activeOrg) { return; }
     this.loading.repos = true;
-    this.currentReposPage += 1;
     this.apiService.fetchOrgRepos({
       installationId: this.activeOrg.installationId
     }, this.currentReposPage)
       .subscribe(
         data => {
           console.log(data);
+          this.currentReposPage += 1;
           if (data.length === 0) {
             this.loadedAllRepos = true;
           } else {
