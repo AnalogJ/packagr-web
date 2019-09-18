@@ -14,8 +14,8 @@ import {Project} from '../models/project';
 })
 export class ProjectCreateComponent implements OnInit {
   loading: {[comp: string]: boolean; } = {
-    repos: true,
-    projects: true,
+    repos: false,
+    projects: false,
     createProject: false,
   };
 
@@ -43,6 +43,7 @@ export class ProjectCreateComponent implements OnInit {
 
   getProjects() {
     if (!this.activeOrg) { return; }
+    this.loading.projects = true;
     this.apiService.getProjects(this.activeOrg.slug).subscribe(
       projects => this.projects = projects,
       error => this.commonService.addAlert(new Alert('Error retrieving projects', error.message)),
