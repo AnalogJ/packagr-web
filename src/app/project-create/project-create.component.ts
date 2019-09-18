@@ -33,7 +33,7 @@ export class ProjectCreateComponent implements OnInit {
       this.activeOrg = activeOrg;
       this.repos = [];
       this.projects = [];
-      this.currentReposPage = 0; // reset, 1 based index (will be incremented by fetch)
+      this.currentReposPage = 1; // reset, 1 based index (will be incremented by fetch)
       this.loadedAllRepos = false;
 
       this.fetchActiveOrgReposPaginated();
