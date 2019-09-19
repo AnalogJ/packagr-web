@@ -114,7 +114,7 @@ export class ProjectDeployLogsComponent implements OnInit, OnDestroy {
             }
 
             // container is running or stopped
-            if (data.status === 'STOPPED' && data.nextToken == null && (!data.lines || data.lines.length === 0)) {
+            if (data.state === 'STOPPED' && data.nextToken == null && (!data.lines || data.lines.length === 0)) {
               this.logSubscription.unsubscribe();
             } else {
               this.logs = this.logs.concat(data.lines);
