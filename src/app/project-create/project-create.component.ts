@@ -53,6 +53,8 @@ export class ProjectCreateComponent implements OnInit {
 
   fetchActiveOrgRepos() {
     if (!this.activeOrg) { return; }
+
+    this.loading.repos = true;
     this.apiService.fetchOrgRepos({
       installationId: this.activeOrg.installationId
     }).subscribe(

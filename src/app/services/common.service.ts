@@ -21,6 +21,9 @@ export class CommonService {
   private alertsSource = new BehaviorSubject([]);
   currentAlerts = this.alertsSource.asObservable();
 
+  private showLeftMenuSource = new BehaviorSubject(true);
+  currentLeftMenu = this.showLeftMenuSource.asObservable();
+
   constructor(private apiService: ApiService, private toastr: ToastrService) {
     this.apiService.fetchUser().subscribe(
       data => {
@@ -38,6 +41,13 @@ export class CommonService {
 
   changeUser(nextUser: User) {
     this.userSource.next(nextUser);
+  }
+
+  changeShowLeftMenu(nextShowLeftMenu: boolean) {
+    this.showLeftMenuSource.next(nextShowLeftMenu);
+  }
+  toggleShowLeftMenu() {
+    this.showLeftMenuSource.next(!this.showLeftMenuSource.getValue());
   }
 
   addAlert(newAlert: Alert) {

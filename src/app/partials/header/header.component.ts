@@ -34,6 +34,10 @@ export class HeaderComponent implements OnInit {
     );
   }
 
+  toggleShowLeftMenu() {
+    this.commonService.toggleShowLeftMenu();
+  }
+
   changeActiveOrg(nextActiveOrg: Organization) {
     this.commonService.changeActiveOrg(nextActiveOrg);
   }

@@ -14,11 +14,18 @@
     <div class="header-right flex-grow-1 col-auto">
       <div class="row justify-content-between align-items-center">
 
-        <!-- Side Header Toggle & Search Start -->
+        <!-- Side Header & Search Start -->
         <div class="col-auto">
           <div class="row align-items-center">
 
-            <!--Account Toggle-->
+            <!--Side Menu Toggle-->
+            <div class="col-auto">
+              <button (click)="toggleShowLeftMenu()" class="side-header-toggle">
+                <fa-icon size="lg" [icon]="['fas', 'bars']"></fa-icon>
+              </button>
+            </div>
+
+            <!--Account Dropdown-->
             <div class="col-auto">
 
               <ul class="header-notification-area">
@@ -26,8 +33,8 @@
                 <!--Organization Select-->
                 <li dropdown class="adomx-dropdown position-relative col-auto">
                   <a dropdownToggle>
-                    <img class="org-icon" [src]="activeOrg.imageUrl" alt="">
-                    <i class="zmdi zmdi-caret-down drop-arrow"></i> {{activeOrg.name}}
+                    <img class="org-icon mr-2" [src]="activeOrg.imageUrl" alt="">
+                    {{activeOrg.name}} <fa-icon class="ml-1" size="lg" [icon]="['fas', 'caret-down']"></fa-icon>
                   </a>
 
                   <!-- Dropdown -->
@@ -47,12 +54,12 @@
 
               <div class="header-search">
 
-                <button class="header-search-open d-block d-xl-none"><i class="zmdi zmdi-search"></i></button>
+                <button class="header-search-open d-block d-xl-none"><fa-icon size="lg" [icon]="['fas', 'search']"></fa-icon></button>
 
                 <div class="header-search-form">
                   <form action="#">
                     <input type="text" placeholder="Search Here">
-                    <button><i class="zmdi zmdi-search"></i></button>
+                    <button><fa-icon size="sm" [icon]="['fas', 'search']"></fa-icon></button>
                   </form>
                   <button class="header-search-close d-block d-xl-none"><i class="zmdi zmdi-close"></i></button>
                 </div>
@@ -90,11 +97,11 @@
                 </div>
                 <div class="body">
                   <ul>
-                    <li><a href="#"><i class="zmdi zmdi-settings"></i>Settings</a></li>
-                    <li><a href="#"><i class="zmdi zmdi-settings"></i>Payment</a></li>
+                    <li><a href="#"><fa-icon [icon]="['fas', 'cog']"></fa-icon> Settings</a></li>
+                    <li><a href="#"><fa-icon [icon]="['fas', 'credit-card']"></fa-icon> Payment</a></li>
                   </ul>
                   <ul>
-                    <li><a href="#"><i class="zmdi zmdi-lock-open"></i>Sign out</a></li>
+                    <li><a href="#"><fa-icon [icon]="['fas', 'door-open']"></fa-icon> Sign out</a></li>
                   </ul>
                 </div>
               </div>

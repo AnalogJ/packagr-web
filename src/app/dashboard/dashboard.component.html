@@ -175,16 +175,16 @@
                 <small>{{pr.updatedAt | amTimeAgo }}</small>
               </div>
               <div class="row">
-                <div class="col-10">
+                <div class="col-10 col-md-8">
                   <a target="_blank" [href]="pr.link">#{{pr.id}} <fa-icon [icon]="['fab', 'github']"></fa-icon></a> opened by <a target="_blank" [href]="pr.userUrl">{{pr.user}}</a>
                   <br/>
                   <code>{{pr.description}}</code>
                   <br/>
                   <span *ngFor="let label of pr.labels" class="badge badge-dark">{{label}}</span>
                 </div>
-                <div class="col-2">
+                <div class="col-2 col-md-4">
 
-                  <div class="btn-group" dropdown>
+                  <div class="btn-group float-right" dropdown>
                     <button [routerLink]="'/'+pr.serviceType + '/' + activeProject.org + '/' + activeProject.repo + '/pr/' + pr.id" type="button" class="btn button-outline button-primary">Deploy</button>
 
 
@@ -205,6 +205,8 @@
 
             </li>
           </ul>
+
+          <app-placeholder-empty *ngIf="!loading.pullrequests && activeProjectPRs.length == 0"></app-placeholder-empty>
 
 
         </div>
