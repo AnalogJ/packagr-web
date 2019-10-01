@@ -38,7 +38,14 @@ export class AuthCallbackComponent implements AfterViewInit {
           localStorage.setItem('id_token', data.token); // set the JWT token
           localStorage.setItem('serviceType', data.serviceType);
 
-          this.router.navigate(['/dashboard']);
+          const redirectUrl = localStorage.getItem('redirect_url');
+          if (redirectUrl) {
+            localStorage.removeItem('redirect_url');
+            this.router.navigateByUrl(redirectUrl);
+          } else {
+            this.router.navigate(['/dashboard']);
+          }
+
         },
         error => {
           this.successfulCallback = false;

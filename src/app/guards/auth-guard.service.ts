@@ -18,11 +18,13 @@ export class AuthGuard implements CanActivate {
       return true;
     }
 
-    console.error('!!COULD NOT LOGIN!')
+    const redirectUrl = state.url;
+    console.error(`!!COULD NOT LOGIN!! ${redirectUrl}`);
 
+    // save redirect url so after auth we can move them back to the page they requested
+    localStorage.setItem('redirect_url', redirectUrl);
     // navigate to login page
     this.router.navigate(['/login']);
-    // you can save redirect url so after authing we can move them back to the page they requested
     return false;
   }
 
