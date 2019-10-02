@@ -88,12 +88,11 @@ export class ApiService {
   }
 
 
-  fetchDockerImage(dockerImage): Observable<any> {
+  fetchDockerImage(dockerImage: string): Observable<any> {
     const params = {
-      query: dockerImage
-    }
-
-    return this.http.get(`https://cloud.docker.com/v2/search/repositories/`, {
+      q: dockerImage
+    };
+    return this.http.get(`https://cors-proxy.analogj.workers.dev/?https://index.docker.io/v1/search`, {
       params
     })
       .pipe(catchError(this.handleError));

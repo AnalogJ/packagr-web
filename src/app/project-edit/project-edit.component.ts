@@ -6,6 +6,7 @@ import {AppSettings} from '../app-settings';
 import {CommonService} from '../services/common.service';
 import {Alert} from '../models/alert';
 import {Observable} from 'rxjs';
+import {ProjectSecret} from '../models/project-secret';
 
 @Component({
   selector: 'app-project-edit',
@@ -115,7 +116,28 @@ export class ProjectEditComponent implements OnInit {
         () =>  this.loading.saveSecret = false
       );
   }
-  cancelSecret(){
+  deleteSecret(deleteSecretName: string) {
+    const payload = {
+      delete_secrets: {}
+    };
+    payload.delete_secrets[deleteSecretName] = false;
+    this.loading.saveSecret = true;
+
+    this.apiService.editProject(this.org, this.repo, {
+      installationId: this.projectData.installation.id
+    }, payload)
+      .subscribe(
+        data => {
+          console.log('PROJECT DELETE SECRET RESP', data);
+          delete this.projectData.secrets[deleteSecretName];
+
+        },
+        error => this.commonService.addAlert(new Alert('Error deleting project secret', error.message)),
+        () =>  this.loading.saveSecret = false
+      );
+
+  }
+  cancelSecret() {
     this.secretName = '';
     this.secretValue = '';
     this.hideAddSecretForm = true;

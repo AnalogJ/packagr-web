@@ -1,4 +1,5 @@
 import {Job} from './job';
+import {ProjectSecret} from './project-secret';
 
 export class Project {
   serviceType: string;
@@ -11,11 +12,7 @@ export class Project {
   installation: {
     id: string;
   };
-  secrets: {[prop: string]: {
-      encValue: string;
-      updatedAt: string;
-    }
-  };
+  secrets: ProjectSecret;
   settings: {
     packageType: string;
     dockerImage: string;

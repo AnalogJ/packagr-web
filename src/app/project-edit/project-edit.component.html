@@ -160,7 +160,7 @@
                   <th>{{i+1}}</th>
                   <td>{{item.key}}</td>
                   <td>{{item.value.updatedAt | amTimeAgo}}</td>
-                  <td><fa-icon [icon]="['far', 'trash-alt']" class="cursor-pointer text-danger"></fa-icon></td>
+                  <td><fa-icon (click)="deleteSecret(item.key)" [icon]="['far', 'trash-alt']" class="cursor-pointer text-danger"></fa-icon></td>
                 </tr>
                 </tbody>
               </table>
