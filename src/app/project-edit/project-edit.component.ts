@@ -36,7 +36,7 @@ export class ProjectEditComponent implements OnInit {
 
   secretName: string = '';
   secretValue: string = '';
-  constructor(private apiService: ApiService, private activatedRoute: ActivatedRoute, private router: Router, private commonService: CommonService) { }
+  constructor(private apiService: ApiService, private activatedRoute: ActivatedRoute, private router: Router, private commonService: CommonService) {}
 
   ngOnInit() {
     this.repo = this.activatedRoute.snapshot.params.repo;
@@ -57,10 +57,17 @@ export class ProjectEditComponent implements OnInit {
 
     this.dockerImagesDatasource = Observable.create((observer: any) => {
       // Runs on every search
-      observer.next(this.projectData.settings.dockerImage);
-    }).mergeMap((token: string) => {
-      this.apiService.fetchDockerImage(token);
+      console.log(`Datasource queried: ${this.projectData.settings.dockerImage}`);
+
+      this.apiService.fetchDockerImage(this.projectData.settings.dockerImage)
+        .subscribe(resp => {
+          observer.next(resp.results);
+        });
     });
+    //   .mergeMap((token: string) => {
+    //   console.log(`searching for: ${token}`)
+    //   this.apiService.fetchDockerImage(token);
+    // });
   }
 
   deleteProject() {

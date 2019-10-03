@@ -66,16 +66,20 @@
               <div class="col-12 mb-20">
                 <label for="dockerImage">Docker Image</label>
                 <input [(ngModel)]="projectData.settings.dockerImage"
+                       [typeaheadAsync]="true"
                        [typeahead]="dockerImagesDatasource"
                        (typeaheadLoading)="dockerImagesLoading($event)"
                        (typeaheadNoResults)="dockerImagesNoResultsHandler($event)"
                        [typeaheadOptionsLimit]="7"
-                       [typeaheadOptionField]="'repo_name'"
+                       typeaheadOptionField="name"
                        name="dockerImage"
                        id="dockerImage"
                        placeholder="Docker Image (eg. 'AnalogJ/capsulecd')"
                        type="text"
                        class="form-control">
+
+                <div *ngIf="loading.queryDockerImages">Loading...</div>
+
               </div>
 
               <div class="col-12 mb-20">
