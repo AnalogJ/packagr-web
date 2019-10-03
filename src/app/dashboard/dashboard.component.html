@@ -162,7 +162,7 @@
     <div class="col-xlg-8 col-lg-6 col-12 mb-30">
       <div class="box">
         <div class="box-head">
-          <h4 class="title">Pull Requests</h4>
+          <h4 *ngIf="activeProject" class="title">Pull Requests for {{ activeProject.repo }}</h4>
         </div>
         <div class="box-body">
           <app-placeholder-loading *ngIf="loading.pullrequests"></app-placeholder-loading>
