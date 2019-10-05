@@ -29,14 +29,29 @@
         </div>
         <div class="box-body">
           <app-placeholder-loading *ngIf="loading.pullrequest"></app-placeholder-loading>
-          <div *ngIf="pullRequestData">
+          <div class="pb-3" *ngIf="pullRequestData">
             <h6>{{pullRequestData.title}}</h6>
             <a target="_blank" [href]="pullRequestData.link">#{{pullRequestData.id}} <fa-icon [icon]="['fab', 'github']"></fa-icon></a> opened {{pullRequestData.updatedAt | amTimeAgo }} by <a target="_blank" [href]="pullRequestData.userUrl">{{pullRequestData.user}}</a>
             <br/>
-            <code>{{pullRequestData.description}}</code>
+            <code>{{pullRequestData.description || '[ No Description ]'}}</code>
             <br/>
             <span *ngFor="let label of pullRequestData.labels" class="badge badge-dark">{{label}}</span>
           </div>
+
+
+          <h6>Commits:</h6>
+          <ul *ngIf="pullRequestCommits" class="list-unstyled">
+            <li *ngFor="let commit of pullRequestCommits" >
+              <div class="avatar avatar-xs mr-10 mb-10" style="display: inline-block;">
+                <img [src]="commit.userAvatarUrl" alt="">
+              </div>
+              <a target="_blank" [href]="commit.link">{{commit.message}}</a>
+              <a class="float-right" target="_blank" [href]="commit.link"><small>{{commit.id | slice:0:7}}</small></a>
+            </li>
+          </ul>
+
+
+
         </div>
       </div>
     </div>

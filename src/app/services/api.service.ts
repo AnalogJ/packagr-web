@@ -10,6 +10,7 @@ import {User} from '../models/user';
 import {Project} from '../models/project';
 import {PullRequest} from '../models/pull-request';
 import {Job} from '../models/job';
+import {Commit} from '../models/commit';
 
 @Injectable()
 export class ApiService {
@@ -213,7 +214,7 @@ export class ApiService {
     //       .catch(this.handleError))
   }
 
-  fetchOrgRepoPullRequest(params): Observable<PullRequest>{
+  fetchOrgRepoPullRequest(params): Observable<PullRequest> {
     const url = `${AppSettings.API_ENDPOINT}/fetch/${this.serviceType()}/pullrequest`;
 
     return this.http.get<PullRequest>(url, {
@@ -223,6 +224,13 @@ export class ApiService {
 
   }
 
+  fetchOrgRepoPullRequestCommits(params): Observable<Commit[]> {
+    const url = `${AppSettings.API_ENDPOINT}/fetch/${this.serviceType()}/pullrequestcommits`;
 
+    return this.http.get<Commit[]>(url, {
+      params
+    })
+      .pipe(catchError(this.handleError));
+  }
 
 }

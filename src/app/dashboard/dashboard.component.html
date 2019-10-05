@@ -181,7 +181,7 @@
                 <div class="col-10 col-md-8">
                   <a target="_blank" [href]="pr.link">#{{pr.id}} <fa-icon [icon]="['fab', 'github']"></fa-icon></a> opened by <a target="_blank" [href]="pr.userUrl">{{pr.user}}</a>
                   <br/>
-                  <code>{{pr.description}}</code>
+                  <code>{{pr.description || '[ No Description ]'}}</code>
                   <br/>
                   <span *ngFor="let label of pr.labels" class="badge badge-dark">{{label}}</span>
                 </div>

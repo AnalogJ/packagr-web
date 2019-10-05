@@ -6,6 +6,7 @@ import {PullRequest} from '../models/pull-request';
 import {CommonService} from '../services/common.service';
 import {Alert} from '../models/alert';
 import {AppSettings} from '../app-settings';
+import {Commit} from '../models/commit';
 
 @Component({
   selector: 'app-project-deploy',
@@ -15,6 +16,7 @@ import {AppSettings} from '../app-settings';
 export class ProjectDeployComponent implements OnInit {
   loading: {[comp: string]: boolean} = {
     pullrequest: true,
+    commits: true,
     project: true,
     createRelease: false
   }
@@ -24,7 +26,7 @@ export class ProjectDeployComponent implements OnInit {
   prNumber: string;
   projectData: Project = new Project();
   pullRequestData: PullRequest = new PullRequest();
-
+  pullRequestCommits: Commit[] = [];
   optionDockerImages = AppSettings.DOCKER_IMAGES;
   versionIncr: string = 'patch';
   constructor(private apiService: ApiService, private commonService: CommonService, private activatedRoute: ActivatedRoute, private router: Router) { }
@@ -54,6 +56,21 @@ export class ProjectDeployComponent implements OnInit {
               },
               error => this.commonService.addAlert(new Alert('Error retrieving project', error.message)),
               () => this.loading.pullrequest = false
+            );
+
+          this.apiService.fetchOrgRepoPullRequestCommits({
+            installationId: this.projectData.installation.id,
+            org: this.org,
+            repo: this.repo,
+            prNumber: this.prNumber
+          })
+            .subscribe(
+              prCommits => {
+                console.log(prCommits);
+                this.pullRequestCommits = prCommits;
+              },
+              error => this.commonService.addAlert(new Alert('Error retrieving project commits', error.message)),
+              () => this.loading.commits = false
             );
         },
         error => this.commonService.addAlert(new Alert('Error retrieving project', error.message)),
