@@ -9,10 +9,14 @@
 
     <!-- Page Heading Start -->
     <div class="col-12 col-lg-auto mb-20">
-      <div class="page-heading">
-        <h3>Deploy Project <span>/ <a target="_blank" [href]="pullRequestData.link">{{projectData.org}}/{{projectData.repo}} #{{prNumber}} <fa-icon [icon]="['fab', 'github']"></fa-icon></a> </span> </h3>
 
-      </div>
+      <app-page-heading
+        headingText="Deploy Project"
+        [subtitleText]="projectData.org + '/' + projectData.repo + ' #' + prNumber"
+        [subtitleLink]="'/'+ projectData.org"
+        [scmLink]="pullRequestData.link">
+      </app-page-heading>
+
     </div><!-- Page Heading End -->
 
   </div><!-- Page Headings End -->

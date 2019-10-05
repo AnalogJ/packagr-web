@@ -9,9 +9,12 @@
 
     <!-- Page Heading Start -->
     <div class="col-12 col-lg-auto mb-20">
-      <div class="page-heading">
-        <h3>Edit Project <span>/ <a *ngIf="projectData" target="_blank" [href]="projectData.scmUrl">{{org}}/{{repo}} <fa-icon [icon]="['fab', 'github']"></fa-icon></a> </span> </h3>
-      </div>
+      <app-page-heading
+        headingText="Edit Project" *ngIf="projectData"
+        [subtitleText]="org + '/' + repo"
+        [subtitleLink]="'/' + org"
+        [scmLink]="projectData.scmUrl">
+      </app-page-heading>
     </div><!-- Page Heading End -->
 
     <!-- Page Button Group Start -->

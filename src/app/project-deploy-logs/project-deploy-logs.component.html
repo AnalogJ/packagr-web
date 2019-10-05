@@ -9,10 +9,14 @@
 
     <!-- Page Heading Start -->
     <div class="col-12 col-lg-auto mb-20">
-      <div class="page-heading">
-        <h3>Deploy Logs<span>/ <a *ngIf="pullRequestData" target="_blank" [href]="pullRequestData.link">{{projectData.org}}/{{projectData.repo}} #{{prNumber}} <fa-icon [icon]="['fab', 'github']"></fa-icon></a> </span> </h3>
 
-      </div>
+      <app-page-heading
+        headingText="Deploy Logs" *ngIf="pullRequestData"
+        [subtitleText]="projectData.org + '/' + projectData.repo + ' #' + prNumber"
+        [subtitleLink]="'/' + projectData.org +'/' + projectData.repo + '/pr/' + prNumber"
+        [scmLink]="pullRequestData.link">
+      </app-page-heading>
+
     </div><!-- Page Heading End -->
 
   </div><!-- Page Headings End -->

@@ -52,6 +52,7 @@ import { PlaceholderErrorComponent } from './partials/placeholder-error/placehol
 import { PlaceholderEmptyComponent } from './partials/placeholder-empty/placeholder-empty.component';
 import { ProjectDeployLogsComponent } from './project-deploy-logs/project-deploy-logs.component';
 import { LoadingButtonComponent } from './partials/loading-button/loading-button.component';
+import { PageHeadingComponent } from './partials/page-heading/page-heading.component';
 
 
 export function getToken() {
@@ -75,7 +76,8 @@ export function getToken() {
     PlaceholderErrorComponent,
     PlaceholderEmptyComponent,
     ProjectDeployLogsComponent,
-    LoadingButtonComponent
+    LoadingButtonComponent,
+    PageHeadingComponent
   ],
   imports: [
     BrowserModule,
