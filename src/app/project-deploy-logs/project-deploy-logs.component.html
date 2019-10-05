@@ -70,7 +70,7 @@
     <div class="col-lg-12 col-12 mb-20">
       <div class="box">
         <div class="box-head">
-          <h4 class="title">Deploy Logs</h4>
+          <h4 class="title">Deploy Logs <span *ngIf="loading.logs" class="spinner-border spinner-sm d-inline-block"></span></h4>
         </div>
         <div class="box-body">
           <app-placeholder-loading *ngIf="loading.logs"></app-placeholder-loading>
