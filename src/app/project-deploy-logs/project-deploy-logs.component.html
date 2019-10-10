@@ -77,12 +77,12 @@
           <h4 class="title">Deploy Logs <span *ngIf="loading.logs" class="spinner-border spinner-sm d-inline-block"></span></h4>
         </div>
         <div class="box-body">
-          <app-placeholder-loading *ngIf="loading.logs"></app-placeholder-loading>
-
-
           <div class="history">
             <pre><code [highlight]="processLines()" [languages]="['shell']"></code></pre>
           </div>
+
+          
+          <app-placeholder-loading *ngIf="loading.logs"></app-placeholder-loading>
         </div>
       </div>
     </div>
