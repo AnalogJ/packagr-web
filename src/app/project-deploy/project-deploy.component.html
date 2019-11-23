@@ -70,26 +70,41 @@
         <div class="box-body">
           <app-placeholder-loading *ngIf="loading.project"></app-placeholder-loading>
 
-          <form *ngIf="projectData">
-            <div class="row mbn-20">
+          <accordion *ngIf="projectData" class="accordion accordion-icon primary" [isAnimated]="true"  [closeOthers]="true">
+            <accordion-group class="card" [(isOpen)]="settingsPanelOpen">
+              <div class="card-header" accordion-heading>
+                <h2><button [ngClass]="{'collapsed': settingsPanelOpen}">Project Settings</button></h2>
+              </div>
+              <div class="card-body">
 
-              <div class="col-12 mb-20">
-                <label for="projectName">Project Name</label>
-                <input disabled id="projectName" [value]="org + '/' + repo" name="textinput" type="text" class="form-control" >
-              </div>
-              <div class="col-12 mb-20">
-                <label for="projectType">Project Type</label>
-                <input disabled id="projectType" [value]="optionDockerImages[projectData.settings.packageType].display" name="textinput" type="text" class="form-control">
-              </div>
-              <div class="col-12 mb-20">
-                <label for="dockerImage">Docker Image</label>
-                <input disabled id="dockerImage" [value]="projectData.settings.dockerImage" name="textinput" type="text" class="form-control">
-              </div>
-            </div>
+                <form>
+                  <div class="row mbn-20">
 
-            <div class="row mt-20 mb-20">
-              <div class="col-12 ">
-              <label>Project Secrets</label>
+                    <div class="col-12 mb-20">
+                      <label for="projectName">Project Name</label>
+                      <input disabled id="projectName" [value]="org + '/' + repo" name="textinput" type="text" class="form-control" >
+                    </div>
+                    <div class="col-12 mb-20">
+                      <label for="projectType">Project Type</label>
+                      <input disabled id="projectType" [value]="optionDockerImages[projectData.settings.packageType].display" name="textinput" type="text" class="form-control">
+                    </div>
+                    <div class="col-12 mb-20">
+                      <label for="dockerImage">Docker Image</label>
+                      <input disabled id="dockerImage" [value]="projectData.settings.dockerImage" name="textinput" type="text" class="form-control">
+                    </div>
+                  </div>
+                </form>
+
+
+              </div>
+
+            </accordion-group>
+            <accordion-group class="card" [(isOpen)]="secretsPanelOpen">
+              <div class="card-header" accordion-heading>
+                <h2><button [ngClass]="{'collapsed': secretsPanelOpen}">Project Secrets</button></h2>
+              </div>
+              <div class="card-body">
+
                 <table class="table">
                   <thead>
                   <tr>
@@ -106,9 +121,10 @@
                   </tr>
                   </tbody>
                 </table>
+
               </div>
-            </div>
-          </form>
+            </accordion-group>
+          </accordion>
 
 
         </div>

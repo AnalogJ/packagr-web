@@ -19,6 +19,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { HighlightModule } from 'ngx-highlightjs';
 import shell from 'highlight.js/lib/languages/shell';
@@ -105,7 +106,8 @@ export function getToken() {
     HighlightModule.forRoot({
       languages: hljsLanguages
     }),
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    AccordionModule.forRoot()
   ],
   providers: [
     ApiService

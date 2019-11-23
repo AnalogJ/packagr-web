@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ApiService} from '../services/api.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Project} from '../models/project';
@@ -20,6 +20,11 @@ export class ProjectDeployComponent implements OnInit {
     project: true,
     createRelease: false
   }
+
+  @Input() settingsPanelOpen = true;
+  @Input() secretsPanelOpen = false;
+  @Input() configPanelOpen = false;
+
 
   repo: string;
   org: string;
