@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiEndpoint: 'https://api.packagr.io/beta'
+  apiEndpoint: 'https://api.packagr.io/beta',
+  ghAppId: 'packagr-io-beta',
 };
 
 /*

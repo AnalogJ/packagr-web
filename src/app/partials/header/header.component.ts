@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {Organization} from '../../models/organization';
-import {User} from '../../models/user';
-import {CommonService} from '../../services/common.service';
-import {ApiService} from '../../services/api.service';
+import { Organization } from '../../models/organization';
+import { User } from '../../models/user';
+import { CommonService } from '../../services/common.service';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-header',
@@ -28,6 +28,10 @@ export class HeaderComponent implements OnInit {
       data => {
         console.log(data);
         this.orgs = data;
+        if (!this.orgs) {
+          // user has not installed packagr app on any organizations.
+          window.location.href = this.apiService.appInstallationUrl();
+        }
         this.commonService.changeActiveOrg(this.orgs[0]);
       },
       error => console.log(error)

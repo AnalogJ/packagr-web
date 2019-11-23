@@ -11,6 +11,7 @@ import {Project} from '../models/project';
 import {PullRequest} from '../models/pull-request';
 import {Job} from '../models/job';
 import {Commit} from '../models/commit';
+import {environment} from '../../environments/environment';
 
 @Injectable()
 export class ApiService {
@@ -64,12 +65,20 @@ export class ApiService {
   }
 
   serviceType(): string {
-    return localStorage.getItem('serviceType');
+    return localStorage.getItem('serviceType'); // can only be 'gh' or 'bb'
   }
 
   authConnect(serviceType): Observable<any> {
     return this.http.get(`${AppSettings.API_ENDPOINT}/connect/${serviceType}`)
       .pipe(catchError(this.handleError));
+  }
+
+  appInstallationUrl(): string {
+    if ( this.serviceType() === 'gh' ) {
+      return `https://github.com/apps/${environment.ghAppId}/installations/new`;
+    } else {
+      throw new Error('unknown service type, cannot generate application installation url.');
+    }
   }
 
   authCallback(serviceType, queryParams): Observable<any> {

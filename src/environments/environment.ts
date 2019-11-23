@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiEndpoint: 'beta'
+  apiEndpoint: 'beta',
+  ghAppId: 'packagr-io-local'
 };
 
 /*
