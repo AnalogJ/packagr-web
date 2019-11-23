@@ -28,9 +28,10 @@ export class HeaderComponent implements OnInit {
       data => {
         console.log(data);
         this.orgs = data;
-        if (!this.orgs) {
+        if (!this.orgs || !this.orgs.length) {
           // user has not installed packagr app on any organizations.
           window.location.href = this.apiService.appInstallationUrl();
+        } else {
         }
         this.commonService.changeActiveOrg(this.orgs[0]);
       },
