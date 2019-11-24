@@ -84,7 +84,7 @@ export class ProjectDeployComponent implements OnInit {
             installationId: this.projectData.installation.id,
             org: this.org,
             repo: this.repo,
-            path: 'capsule.yml'
+            path: 'packagr.yml'
           })
             .subscribe(
               fileContent => {
