@@ -18,7 +18,8 @@ export class ProjectDeployComponent implements OnInit {
     pullrequest: true,
     commits: true,
     project: true,
-    createRelease: false
+    createRelease: false,
+    fileConfig: true,
   }
 
   @Input() settingsPanelOpen = true;
@@ -33,6 +34,7 @@ export class ProjectDeployComponent implements OnInit {
   pullRequestData: PullRequest = new PullRequest();
   pullRequestCommits: Commit[] = [];
   optionDockerImages = AppSettings.DOCKER_IMAGES;
+  configFileContent: string = '';
   versionIncr: string = 'patch';
   constructor(private apiService: ApiService, private commonService: CommonService, private activatedRoute: ActivatedRoute, private router: Router) { }
 
@@ -60,7 +62,7 @@ export class ProjectDeployComponent implements OnInit {
                 this.pullRequestData = prData;
               },
               error => this.commonService.addAlert(new Alert('Error retrieving project', error.message)),
-              () => this.loading.pullrequest = false
+              () => this.loading.pullrequestl = false
             );
 
           this.apiService.fetchOrgRepoPullRequestCommits({
@@ -76,6 +78,21 @@ export class ProjectDeployComponent implements OnInit {
               },
               error => this.commonService.addAlert(new Alert('Error retrieving project commits', error.message)),
               () => this.loading.commits = false
+            );
+
+          this.apiService.fetchOrgRepoFileContent({
+            installationId: this.projectData.installation.id,
+            org: this.org,
+            repo: this.repo,
+            path: 'capsule.yml'
+          })
+            .subscribe(
+              fileContent => {
+                this.configFileContent = fileContent;
+              },
+              error => {},
+              // error => this.commonService.addAlert(new Alert('Error retrieving file content', error.message)),
+              () => this.loading.fileConfig = false
             );
         },
         error => this.commonService.addAlert(new Alert('Error retrieving project', error.message)),

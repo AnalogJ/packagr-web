@@ -124,6 +124,25 @@
 
               </div>
             </accordion-group>
+            <accordion-group class="card" [(isOpen)]="configPanelOpen">
+              <div class="card-header" accordion-heading>
+                <h2><button [ngClass]="{'collapsed': configPanelOpen}">packagr.yml File</button></h2>
+              </div>
+              <div class="card-body">
+                <p>
+                Packagr defaults can be customized by providing a configuration file in your repository.
+                This file should be stored in the root of your repository, and named <code>packagr.yml</code>.
+                </p>
+
+                <p>
+                A list of all available configuration options, and short descriptions, is available in this
+                <a class="text-primary" target="_blank" href="https://github.com/AnalogJ/capsulecd/blob/master/example.capsule.yml">example packagr.yml</a> file
+                </p>
+
+                <p>If Packagr is able to detect your <code>packagr.yml</code> file, it will be displayed below.</p>
+                <pre *ngIf="configFileContent"><code [highlight]="configFileContent" [languages]="['yaml']"></code></pre>
+              </div>
+            </accordion-group>
           </accordion>
 
 

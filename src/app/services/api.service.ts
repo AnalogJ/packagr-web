@@ -242,4 +242,13 @@ export class ApiService {
       .pipe(catchError(this.handleError));
   }
 
+  fetchOrgRepoFileContent(params): Observable<string> {
+    const url = `${AppSettings.API_ENDPOINT}/fetch/${this.serviceType()}/file`;
+
+    return this.http.get<string>(url, {
+      params
+    })
+      .pipe(catchError(this.handleError));
+  }
+
 }
