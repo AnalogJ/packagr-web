@@ -62,7 +62,7 @@ export class ProjectDeployComponent implements OnInit {
                 this.pullRequestData = prData;
               },
               error => this.commonService.addAlert(new Alert('Error retrieving project', error.message)),
-              () => this.loading.pullrequestl = false
+              () => this.loading.pullrequest = false
             );
 
           this.apiService.fetchOrgRepoPullRequestCommits({
