@@ -23,6 +23,7 @@ import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { HighlightModule } from 'ngx-highlightjs';
 import shell from 'highlight.js/lib/languages/shell';
+import yaml from 'highlight.js/lib/languages/yaml';
 import { ToastrModule } from 'ngx-toastr';
 
 
@@ -32,7 +33,8 @@ import { ToastrModule } from 'ngx-toastr';
  */
 export function hljsLanguages() {
   return [
-    {name: 'shell', func: shell}
+    {name: 'shell', func: shell},
+    {name: 'yaml', func: yaml}
   ];
 }
 
