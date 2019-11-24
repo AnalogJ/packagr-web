@@ -42,6 +42,8 @@
                     <li *ngFor="let choice of orgs" >
                       <a (click)="changeActiveOrg(choice)"><img class="org-icon" [src]="choice.imageUrl" alt="">{{choice.name}}</a>
                     </li>
+                    <li class="dropdown-divider"></li>
+                    <li><a [href]="addOrgLink()">Add Organization</a></li>
                   </ul>
 
                 </li>

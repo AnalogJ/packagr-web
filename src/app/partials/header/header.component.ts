@@ -47,4 +47,8 @@ export class HeaderComponent implements OnInit {
     this.commonService.changeActiveOrg(nextActiveOrg);
   }
 
+  addOrgLink() {
+    return this.apiService.appInstallationUrl()
+  }
+
 }
