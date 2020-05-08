@@ -11,7 +11,7 @@ jobs:
         name: Global NPM packages
         command: |
           npm install npm@latest
-          npm install @angular/cli@latest
+          npm install @angular/cli@8.0.1
     - restore_cache:
         key: dependency-cache-{{ checksum "package.json" }}
     - run:
