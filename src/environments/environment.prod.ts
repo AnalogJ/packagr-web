@@ -1,3 +1,6 @@
 export const environment = {
-  production: true
+  production: true,
+  apiEndpoint: 'https://api.packagr.io/v1',
+
+  ghAppId: 'packagr-io',
 };

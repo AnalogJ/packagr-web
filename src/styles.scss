@@ -1,0 +1,79 @@
+/* You can add global styles to this file, and also import other style files */
+
+
+/* Only show on hover */
+.only-show-on-hover {
+  visibility: hidden;
+}
+*:hover > .only-show-on-hover  {
+  visibility: visible;
+}
+
+/* force footer to the bottom of the page*/
+.content-body {
+  min-height:100vh;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+
+.project-create-table.table tbody > tr > td,
+.project-create-table.table tbody > tr > th {
+  white-space: normal;
+}
+
+.dropdown-item {
+  background-color: white
+}
+
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+/* Header - Org Dropdown */
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+.org-icon {
+  background-color: white;
+  max-width: 40px;
+}
+
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+/* Header - Logo */
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+.logo-wrapper {
+  max-width: 160px;
+}
+
+
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+/* Auth Connect/Callback - Modal */
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+
+
+.modal {
+  text-align: center;
+}
+
+@media screen and (min-width: 768px) {
+  .modal:before {
+    display: inline-block;
+    vertical-align: middle;
+    content: " ";
+    height: 100%;
+  }
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+.full-page-bg-wrapper{position: fixed; top: 0; right: 0; bottom: 0; left: 0;}
+.full-page-bg {
+  background: url('assets/images/login/light-industrial_1600x900.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: 100%;
+  width:100%
+}

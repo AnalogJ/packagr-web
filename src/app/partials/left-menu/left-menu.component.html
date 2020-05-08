@@ -1,0 +1,17 @@
+<!-- Side Header Start -->
+<button (click)="closeLeftMenu()" class="side-header-close">
+  <fa-icon size="lg" [icon]="['fas', 'window-close']"></fa-icon>
+</button>
+<!-- Side Header Inner Start -->
+<div class="side-header-inner custom-scroll">
+
+  <nav class="side-header-menu" id="side-header-menu">
+    <ul>
+      <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a [routerLink]="'/' + serviceType + '/' + activeOrg.slug" ><fa-icon [icon]="['fas', 'home']"></fa-icon> <span>Dashboard</span></a></li>
+      <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a [routerLink]="'/' + serviceType + '/' + activeOrg.slug + '/create'" ><fa-icon [icon]="['fas', 'folder-plus']"></fa-icon> <span>Add Project</span></a></li>
+
+    </ul>
+  </nav>
+
+</div><!-- Side Header Inner End -->
+<!-- Side Header End -->

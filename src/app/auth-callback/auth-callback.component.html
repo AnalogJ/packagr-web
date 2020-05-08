@@ -1,3 +1,31 @@
-<p>
-  auth-callback works!
-</p>
+<div class="full-page-bg-wrapper">
+  <div class="full-page-bg"></div>
+</div>
+
+<div bsModal #childModal="bs-modal" [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1"
+     role="dialog" aria-labelledby="dialog-child-name">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-body" style="padding:5px;">
+
+        <div *ngIf="successfulCallback" class="alert alert-primary" role="alert">
+          <h3 >Success</h3>
+          <p>You have successfully connected your account. Please wait while we redirect you.</p>
+          <button class="button button-outline button-primary">
+            <span class="spinner-border spinner-sm d-inline-block mr-5"></span>
+            <span>Please Wait...</span>
+          </button>
+        </div>
+
+
+        <div *ngIf="!successfulCallback" class="alert alert-secondary" role="alert">
+          <h3>Failure</h3>
+          <p>An error occurred while attempting to authenticate. Please try again.</p>
+          <button [routerLink]="'/login'" class="button button-outline button-danger">
+            <span>Try Again..</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -33,7 +33,8 @@ jobs:
             npm run-script ng --  build --output-path ../dist --base-href "/" --source-map --prod
             echo "www.packagr.io" > ../dist/CNAME
           else
-            npm run-script ng --  build --output-path ../dist --base-href "/" --dev
+            npm run-script ng --  build --output-path ../dist --base-href "/" --configuration=beta
+            echo "beta.packagr.io" > ../dist/CNAME
           fi
           cp ../dist/angular.html ../dist/404.html
 
@@ -75,7 +76,6 @@ jobs:
             git remote add origin git@github.com:AnalogJ/packagr-web.git
           else
             git remote add origin git@github.com:AnalogJ/packagr-web-beta.git
-
           fi
           git push --force origin gh-pages:gh-pages
 workflows:

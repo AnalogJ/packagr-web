@@ -1,0 +1,95 @@
+<app-header></app-header>
+<app-left-menu></app-left-menu>
+
+<!-- Content Body Start -->
+<div class="content-body">
+
+  <!-- Page Headings Start -->
+  <div class="row justify-content-between align-items-center ">
+
+    <!-- Page Heading Start -->
+    <div class="col-12 col-lg-auto mb-20">
+
+      <app-page-heading
+        headingText="Deploy Logs" *ngIf="pullRequestData"
+        [subtitleText]="projectData.org + '/' + projectData.repo + ' #' + prNumber"
+        [subtitleLink]="'/' + projectData.org +'/' + projectData.repo + '/pr/' + prNumber"
+        [scmLink]="pullRequestData.link">
+      </app-page-heading>
+
+    </div><!-- Page Heading End -->
+
+  </div><!-- Page Headings End -->
+
+  <div class="row">
+    <div class="offset-lg-2 col-lg-8 col-12 mb-20">
+      <div class="box">
+        <div class="box-head">
+          <h4 class="title">Pull Request Info</h4>
+        </div>
+        <div class="box-body">
+          <app-placeholder-loading *ngIf="loading.pullrequest"></app-placeholder-loading>
+          <div *ngIf="pullRequestData">
+            <h6>{{pullRequestData.title}}</h6>
+            <a target="_blank" [href]="pullRequestData.link">#{{pullRequestData.id}} <fa-icon [icon]="['fab', 'github']"></fa-icon></a> opened {{pullRequestData.updatedAt | amTimeAgo }} by <a target="_blank" [href]="pullRequestData.userUrl">{{pullRequestData.user}}</a>
+            <br/>
+            <code>{{pullRequestData.description}}</code>
+            <br/>
+            <span *ngFor="let label of pullRequestData.labels" class="badge badge-dark">{{label}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+
+    <!--Project Info Start-->
+    <div class="offset-lg-2 col-lg-8 col-12 mb-20">
+      <div class="box">
+        <div class="box-head">
+          <h4 class="title">Deploy Status</h4>
+        </div>
+        <div class="box-body">
+          <app-placeholder-loading *ngIf="loading.project"></app-placeholder-loading>
+
+          <form *ngIf="projectData">
+            <div class="row mbn-20">
+
+              <div class="col-12 mb-20">
+                <label for="projectName">Status</label>
+                <input disabled id="projectName" [value]="jobData.status" name="textinput" type="text" class="form-control" >
+              </div>
+
+            </div>
+          </form>
+
+
+        </div>
+      </div>
+    </div>
+    <!--Project Info End-->
+
+    <!--Release Info Start-->
+    <div class="col-lg-12 col-12 mb-20">
+      <div class="box">
+        <div class="box-head">
+          <h4 class="title">Deploy Logs <span *ngIf="loading.logs" class="spinner-border spinner-sm d-inline-block"></span></h4>
+        </div>
+        <div class="box-body">
+          <div class="history">
+            <pre><code [highlight]="processLines()" [languages]="['shell']"></code></pre>
+          </div>
+
+
+          <app-placeholder-loading *ngIf="loading.logs"></app-placeholder-loading>
+        </div>
+      </div>
+    </div>
+    <!--Project Info End-->
+
+  </div>
+
+</div><!-- Content Body End -->
+
+<app-footer></app-footer>

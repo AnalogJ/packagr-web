@@ -1,0 +1,190 @@
+<app-header></app-header>
+<app-left-menu></app-left-menu>
+
+<!-- Content Body Start -->
+<div class="content-body">
+
+  <!-- Page Headings Start -->
+  <div class="row justify-content-between align-items-center ">
+
+    <!-- Page Heading Start -->
+    <div class="col-12 col-lg-auto mb-20">
+
+      <app-page-heading
+        headingText="Deploy Project"
+        [subtitleText]="projectData.org + '/' + projectData.repo + ' #' + prNumber"
+        [subtitleLink]="'/'+ projectData.org"
+        [scmLink]="pullRequestData.link">
+      </app-page-heading>
+
+    </div><!-- Page Heading End -->
+
+  </div><!-- Page Headings End -->
+
+  <div class="row">
+    <div class="offset-lg-2 col-lg-8 col-12 mb-20">
+      <div class="box">
+        <div class="box-head">
+          <h4 class="title">Pull Request Info</h4>
+        </div>
+        <div class="box-body">
+          <app-placeholder-loading *ngIf="loading.pullrequest"></app-placeholder-loading>
+          <div class="pb-3" *ngIf="pullRequestData">
+            <h6>{{pullRequestData.title}}</h6>
+            <a target="_blank" [href]="pullRequestData.link">#{{pullRequestData.id}} <fa-icon [icon]="['fab', 'github']"></fa-icon></a> opened {{pullRequestData.updatedAt | amTimeAgo }} by <a target="_blank" [href]="pullRequestData.userUrl">{{pullRequestData.user}}</a>
+            <br/>
+            <code>{{pullRequestData.description || '[ No Description ]'}}</code>
+            <br/>
+            <span *ngFor="let label of pullRequestData.labels" class="badge badge-dark">{{label}}</span>
+          </div>
+
+
+          <h6>Commits: <span class="badge badge-outline badge-primary">{{pullRequestCommits.length}}</span></h6>
+          <ul *ngIf="pullRequestCommits" class="list-unstyled">
+            <li *ngFor="let commit of pullRequestCommits | slice:0:10" >
+              <div class="avatar avatar-xs mr-10 mb-10" style="display: inline-block;">
+                <img [src]="commit.userAvatarUrl" alt="">
+              </div>
+              <a target="_blank" [href]="commit.link">{{commit.message}}</a>
+              <a class="float-right" target="_blank" [href]="commit.link"><small>{{commit.id | slice:0:7}}</small></a>
+            </li>
+          </ul>
+
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+
+    <!--Project Info Start-->
+    <div class="offset-lg-2 col-lg-8 col-12 mb-20">
+      <div class="box">
+        <div class="box-head">
+          <h4 class="title">Project Info <a [routerLink]="'/' + projectData.serviceType + '/' + projectData.org + '/' + projectData.repo + '/edit'" class="float-right">
+              <fa-icon [icon]="['far', 'edit']" size="lg" class="cursor-pointer text-success"></fa-icon>
+            </a></h4>
+        </div>
+        <div class="box-body">
+          <app-placeholder-loading *ngIf="loading.project"></app-placeholder-loading>
+
+          <accordion *ngIf="projectData" class="accordion accordion-icon primary" [isAnimated]="true"  [closeOthers]="true">
+            <accordion-group class="card" [(isOpen)]="settingsPanelOpen">
+              <div class="card-header" accordion-heading>
+                <h2><button [ngClass]="{'collapsed': settingsPanelOpen}">Project Settings</button></h2>
+              </div>
+              <div class="card-body">
+
+                <form>
+                  <div class="row mbn-20">
+
+                    <div class="col-12 mb-20">
+                      <label for="projectName">Project Name</label>
+                      <input disabled id="projectName" [value]="org + '/' + repo" name="textinput" type="text" class="form-control" >
+                    </div>
+                    <div class="col-12 mb-20">
+                      <label for="projectType">Project Type</label>
+                      <input disabled id="projectType" [value]="optionDockerImages[projectData.settings.packageType].display" name="textinput" type="text" class="form-control">
+                    </div>
+                    <div class="col-12 mb-20">
+                      <label for="dockerImage">Docker Image</label>
+                      <input disabled id="dockerImage" [value]="projectData.settings.dockerImage" name="textinput" type="text" class="form-control">
+                    </div>
+                  </div>
+                </form>
+
+
+              </div>
+
+            </accordion-group>
+            <accordion-group class="card" [(isOpen)]="secretsPanelOpen">
+              <div class="card-header" accordion-heading>
+                <h2><button [ngClass]="{'collapsed': secretsPanelOpen}">Project Secrets</button></h2>
+              </div>
+              <div class="card-body">
+
+                <table class="table table-bordered">
+                  <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Added</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let item of projectData.secrets | keyvalue; let i = index;">
+                    <th>{{i+1}}</th>
+                    <td>{{item.key}}</td>
+                    <td>{{item.value.updatedAt | amTimeAgo}}</td>
+                  </tr>
+                  </tbody>
+                </table>
+
+              </div>
+            </accordion-group>
+            <accordion-group class="card" [(isOpen)]="configPanelOpen">
+              <div class="card-header" accordion-heading>
+                <h2><button [ngClass]="{'collapsed': configPanelOpen}">packagr.yml File</button></h2>
+              </div>
+              <div class="card-body">
+                <p>
+                Packagr defaults can be customized by providing a configuration file in your repository.
+                This file should be stored in the root of your repository, and named <code>packagr.yml</code>.
+                </p>
+
+                <p>
+                A list of all available configuration options, and short descriptions, is available in this
+                <a class="text-primary" target="_blank" href="https://github.com/AnalogJ/capsulecd/blob/master/example.capsule.yml">example packagr.yml</a> file
+                </p>
+
+                <p>If Packagr is able to detect your <code>packagr.yml</code> file, it will be displayed below.</p>
+                <pre *ngIf="configFileContent"><code [highlight]="configFileContent" [languages]="['yaml']"></code></pre>
+              </div>
+            </accordion-group>
+          </accordion>
+
+
+        </div>
+      </div>
+    </div>
+    <!--Project Info End-->
+
+    <!--Release Info Start-->
+    <div class="offset-lg-2 col-lg-8 col-12 mb-20">
+      <div class="box">
+        <div class="box-head">
+          <h4 class="title">Release Info</h4>
+        </div>
+        <div class="box-body">
+          <form>
+            <div class="row mbn-20">
+
+              <div class="col-12 mb-20">
+                <label for="versionIncr">Version Increment</label>
+                <select [(ngModel)]="versionIncr" id="versionIncr" name="versionIncr" class="form-control">
+                  <option value="major">Major (1.x.x)</option>
+                  <option value="minor">Minor (x.1.x)</option>
+                  <option value="patch">Patch (x.x.1)</option>
+                </select>
+              </div>
+
+              <div class="col-12 mb-20">
+                <app-loading-button (buttonClicked)="createRelease()" [buttonClass]="'button button-danger'" [isLoading]="loading.createRelease">
+                  Create Release from Pull Request
+                </app-loading-button>
+              </div>
+
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!--Project Info End-->
+
+  </div>
+
+</div><!-- Content Body End -->
+
+<app-footer></app-footer>

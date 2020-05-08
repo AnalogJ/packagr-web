@@ -1,0 +1,122 @@
+<!-- Header Section Start -->
+<div class="container-fluid">
+  <div class="row justify-content-between align-items-center">
+
+    <!-- Header Logo (Header Left) Start -->
+    <div class="header-logo col-auto">
+      <a class="logo-wrapper" routerLink="/dashboard">
+        <img src="assets/logo/banner-black.png" alt="">
+        <img src="assets/logo/banner-white.png" class="logo-light" alt="">
+      </a>
+    </div><!-- Header Logo (Header Left) End -->
+
+    <!-- Header Right Start -->
+    <div class="header-right flex-grow-1 col-auto">
+      <div class="row justify-content-between align-items-center">
+
+        <!-- Side Header & Search Start -->
+        <div class="col-auto">
+          <div class="row align-items-center">
+
+            <!--Side Menu Toggle-->
+            <div class="col-auto">
+              <button (click)="toggleShowLeftMenu()" class="side-header-toggle">
+                <fa-icon size="lg" [icon]="['fas', 'bars']"></fa-icon>
+              </button>
+            </div>
+
+            <!--Account Dropdown-->
+            <div class="col-auto">
+
+              <ul class="header-notification-area">
+
+                <!--Organization Select-->
+                <li dropdown class="adomx-dropdown position-relative col-auto">
+                  <a dropdownToggle>
+                    <img class="org-icon mr-2" [src]="activeOrg.imageUrl" alt="">
+                    {{activeOrg.name}} <fa-icon class="ml-1" size="lg" [icon]="['fas', 'caret-down']"></fa-icon>
+                  </a>
+
+                  <!-- Dropdown -->
+                  <ul *dropdownMenu class="adomx-dropdown-menu dropdown-menu-language">
+                    <li *ngFor="let choice of orgs" >
+                      <a (click)="changeActiveOrg(choice)"><img class="org-icon" [src]="choice.imageUrl" alt="">{{choice.name}}</a>
+                    </li>
+                    <li class="dropdown-divider"></li>
+                    <li><a [href]="addOrgLink()">Add Organization</a></li>
+                  </ul>
+
+                </li>
+
+              </ul>
+            </div>
+
+            <!--Header Search-->
+            <div class="col-auto">
+
+              <div class="header-search">
+
+                <button class="header-search-open d-block d-xl-none"><fa-icon size="lg" [icon]="['fas', 'search']"></fa-icon></button>
+
+                <div class="header-search-form">
+                  <form action="#">
+                    <input type="text" placeholder="Search Here">
+                    <button><fa-icon size="sm" [icon]="['fas', 'search']"></fa-icon></button>
+                  </form>
+                  <button class="header-search-close d-block d-xl-none"><i class="zmdi zmdi-close"></i></button>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </div><!-- Side Header Toggle & Search End -->
+
+        <!-- Header Notifications Area Start -->
+        <div class="col-auto">
+
+          <ul class="header-notification-area">
+
+            <!--Notification-->
+
+            <!--User-->
+            <li dropdown class="adomx-dropdown col-auto">
+              <a dropdownToggle>
+                                          <span class="user">
+                                      <span class="avatar">
+                                          <img [src]="user.avatarUrl" alt="">
+                                          <span class="status"></span>
+                                          </span>
+                                          <span class="name">{{user.username}}</span>
+                                          </span>
+              </a>
+
+              <!-- Dropdown -->
+              <div *dropdownMenu class="adomx-dropdown-menu dropdown-menu-user">
+                <div class="head">
+                  <h5 class="name"><a>{{user.name}}</a></h5>
+                  <a class="mail">{{user.email}}</a>
+                </div>
+                <div class="body">
+                  <ul>
+                    <li><a href="#"><fa-icon [icon]="['fas', 'cog']"></fa-icon> Settings</a></li>
+                    <li><a href="#"><fa-icon [icon]="['fas', 'credit-card']"></fa-icon> Payment</a></li>
+                  </ul>
+                  <ul>
+                    <li><a href="#"><fa-icon [icon]="['fas', 'door-open']"></fa-icon> Sign out</a></li>
+                  </ul>
+                </div>
+              </div>
+
+            </li>
+
+          </ul>
+
+        </div><!-- Header Notifications Area End -->
+
+      </div>
+    </div><!-- Header Right End -->
+
+  </div>
+</div>
+<!-- Header Section End -->

@@ -1,33 +1,119 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AuthConnectComponent } from './auth-connect/auth-connect.component';
-import { AuthCallbackComponent } from './auth-callback/auth-callback.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-
+// Third Party Components/Directives
+import { JwtModule } from '@auth0/angular-jwt';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
+import { MomentModule } from 'ngx-moment';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { AccordionModule } from 'ngx-bootstrap/accordion';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { HighlightModule } from 'ngx-highlightjs';
+import shell from 'highlight.js/lib/languages/shell';
+import yaml from 'highlight.js/lib/languages/yaml';
+import { ToastrModule } from 'ngx-toastr';
+
+
+/**
+ * Import every language you wish to highlight here
+ * NOTE: The name of each language must match the file name its imported from
+ */
+export function hljsLanguages() {
+  return [
+    {name: 'shell', func: shell},
+    {name: 'yaml', func: yaml}
+  ];
+}
+
+
+// Application Components/Services/Modules
+import { ApiService } from './services/api.service';
+import { AuthConnectComponent } from './auth-connect/auth-connect.component';
+import { AuthCallbackComponent } from './auth-callback/auth-callback.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ProjectCreateComponent } from './project-create/project-create.component';
+import { ProjectEditComponent } from './project-edit/project-edit.component';
+import { ProjectDeployComponent } from './project-deploy/project-deploy.component';
+import { HeaderComponent } from './partials/header/header.component';
+import { LeftMenuComponent } from './partials/left-menu/left-menu.component';
+import { FooterComponent } from './partials/footer/footer.component';
+import { PlaceholderLoadingComponent } from './partials/placeholder-loading/placeholder-loading.component';
+import { PlaceholderErrorComponent } from './partials/placeholder-error/placeholder-error.component';
+import { PlaceholderEmptyComponent } from './partials/placeholder-empty/placeholder-empty.component';
+import { ProjectDeployLogsComponent } from './project-deploy-logs/project-deploy-logs.component';
+import { LoadingButtonComponent } from './partials/loading-button/loading-button.component';
+import { PageHeadingComponent } from './partials/page-heading/page-heading.component';
+
+
+export function getToken() {
+  return localStorage.getItem('id_token');
+}
+
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthConnectComponent,
     AuthCallbackComponent,
-    DashboardComponent
+    DashboardComponent,
+    ProjectCreateComponent,
+    ProjectEditComponent,
+    ProjectDeployComponent,
+    HeaderComponent,
+    LeftMenuComponent,
+    FooterComponent,
+    PlaceholderLoadingComponent,
+    PlaceholderErrorComponent,
+    PlaceholderEmptyComponent,
+    ProjectDeployLogsComponent,
+    LoadingButtonComponent,
+    PageHeadingComponent
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
-    FontAwesomeModule
-
+    FormsModule,
+    FontAwesomeModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: getToken,
+        authScheme: 'JWT ',
+        whitelistedDomains: ['api.packagr.io', 'localhost:3000', 'www.packagr.io', 'beta.packagr.io', 'localhost:4000'],
+        blacklistedRoutes: [],
+        throwNoTokenError: false,
+        skipWhenExpired: true
+      }
+    }),
+    BrowserAnimationsModule,
+    BsDropdownModule.forRoot(),
+    CollapseModule.forRoot(),
+    TypeaheadModule.forRoot(),
+    MomentModule,
+    InfiniteScrollModule,
+    ModalModule.forRoot(),
+    HighlightModule.forRoot({
+      languages: hljsLanguages
+    }),
+    ToastrModule.forRoot(),
+    AccordionModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    ApiService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

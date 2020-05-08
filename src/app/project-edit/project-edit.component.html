@@ -1,0 +1,186 @@
+<app-header></app-header>
+<app-left-menu></app-left-menu>
+
+<!-- Content Body Start -->
+<div class="content-body">
+
+  <!-- Page Headings Start -->
+  <div class="row justify-content-between align-items-center mb-10">
+
+    <!-- Page Heading Start -->
+    <div class="col-12 col-lg-auto mb-20">
+      <app-page-heading
+        headingText="Edit Project" *ngIf="projectData"
+        [subtitleText]="org + '/' + repo"
+        [subtitleLink]="'/' + org"
+        [scmLink]="projectData.scmUrl">
+      </app-page-heading>
+    </div><!-- Page Heading End -->
+
+    <!-- Page Button Group Start -->
+    <div class="col-12 col-lg-auto mb-20">
+      <div class="buttons-group">
+
+        <app-loading-button *ngIf="projectData" (buttonClicked)="deleteProject()" [buttonClass]="'button button-outline button-danger'" [isLoading]="loading.deleteProject">
+          Delete Project
+        </app-loading-button>
+      </div>
+    </div><!-- Page Button Group End -->
+
+  </div><!-- Page Headings End -->
+
+  <div class="row mb-30">
+    <div class="col-12">
+      <p>Update your project settings here, like library language, Docker container and secrets. These settings will be used whenever you publish a new version of your library
+      </p>
+    </div>
+  </div>
+
+  <div class="row mbn-30">
+
+    <!--Default Form Start-->
+    <div class="col-lg-6 col-12 mb-30">
+      <div class="box">
+        <div class="box-head">
+          <h4 class="title">Project Settings</h4>
+        </div>
+        <div class="box-body">
+
+          <app-placeholder-loading *ngIf="loading.project"></app-placeholder-loading>
+
+
+          <form *ngIf="projectData">
+            <div class="row mbn-20">
+
+              <div class="col-12 mb-20">
+                <label for="packageType">Package Type</label>
+                <select [(ngModel)]="projectData.settings.packageType" (ngModelChange)="packageTypeChanged($event)" id="packageType" name="packageType" class="form-control">
+                  <option *ngFor="let key of optionDockerImagesKeys" [value]="key">{{optionDockerImages[key].display}}</option>
+                </select>
+              </div>
+              <div class="col-12 mb-20">
+                <label for="versionIncr">Default Version Increment</label>
+                <select [(ngModel)]="projectData.settings.versionIncr" id="versionIncr" name="versionIncr" class="form-control">
+                  <option value="major">Major (1.x.x)</option>
+                  <option value="minor">Minor (x.1.x)</option>
+                  <option value="patch">Patch (x.x.1)</option>
+                </select>
+              </div>
+              <div class="col-12 mb-20">
+                <label for="dockerImage">Docker Image</label>
+                <input [(ngModel)]="projectData.settings.dockerImage"
+                       [typeaheadAsync]="true"
+                       [typeahead]="dockerImagesDatasource"
+                       (typeaheadLoading)="dockerImagesLoading($event)"
+                       (typeaheadNoResults)="dockerImagesNoResultsHandler($event)"
+                       [typeaheadOptionsLimit]="7"
+                       typeaheadOptionField="name"
+                       name="dockerImage"
+                       id="dockerImage"
+                       placeholder="Docker Image (eg. 'AnalogJ/capsulecd')"
+                       type="text"
+                       autocomplete="off"
+                       class="form-control">
+
+                <div *ngIf="loading.queryDockerImages">Loading...</div>
+
+              </div>
+
+              <div class="col-12 mb-20">
+
+                <app-loading-button (buttonClicked)="saveSettings()" [buttonClass]="'button button-primary mr-15'" [isLoading]="loading.saveSettings">
+                  Submit
+                </app-loading-button>
+
+                <app-loading-button [buttonClass]="'button button-danger'">
+                  Cancel
+                </app-loading-button>
+              </div>
+
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!--Default Form End-->
+
+    <!--Default Form Start-->
+    <div class="col-lg-6 col-12 mb-30">
+      <div class="box">
+        <div class="box-head">
+          <h4 class="title">Project Secrets
+            <span class="float-right">
+              <fa-icon (click)="hideAddSecretForm = !hideAddSecretForm" [attr.aria-expanded]="!hideAddSecretForm" [icon]="['far', 'plus-square']" size="lg" class="cursor-pointer text-success"></fa-icon>
+            </span></h4>
+        </div>
+        <div class="box-body">
+          <form>
+            <div class="row">
+              <div class="col-12 mb-20">
+                <p>
+                Add environment variables to the project build. You can add sensitive data (e.g. NPM, RubyGems API keys) here, rather than placing them in the repository.
+                </p>
+                <p *ngIf="projectData.settings.packageType && optionDockerImages[projectData.settings.packageType].recommendedSecrets.length">
+                  {{optionDockerImages[projectData.settings.packageType].display}} packages should have the following secrets configured:
+                  <br/>
+                  <code class="text-strong">
+                {{optionDockerImages[projectData.settings.packageType].recommendedSecrets.join(', ')}}
+                </code>
+                </p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div [collapse]="hideAddSecretForm" class="col-12 mb-20">
+                <label for="secretName">Secret Name</label>
+                <input  [(ngModel)]="secretName" type="text" id="secretName" name="secretName" class="form-control" placeholder="Environmental Variable Name">
+              </div>
+              <div [collapse]="hideAddSecretForm" class="col-12 mb-20">
+                <label for="secretValue">Secret Value</label>
+                <input [(ngModel)]="secretValue" type="password" id="secretValue" name="secretValue" class="form-control" placeholder="Secret">
+              </div>
+
+              <div [collapse]="hideAddSecretForm" class="col-12 mb-20">
+
+                <app-loading-button (buttonClicked)="saveSecret()" [buttonClass]="'button button-primary mr-15'" [isLoading]="loading.saveSecret">
+                  Submit
+                </app-loading-button>
+
+                <app-loading-button (buttonClicked)="cancelSecret()" [buttonClass]="'button button-danger'">
+                  Cancel
+                </app-loading-button>
+              </div>
+            </div>
+
+            <div class="row mbn-20">
+
+              <table class="table">
+                <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>Added</th>
+                  <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let item of projectData.secrets | keyvalue; let i = index;">
+                  <th>{{i+1}}</th>
+                  <td>{{item.key}}</td>
+                  <td>{{item.value.updatedAt | amTimeAgo}}</td>
+                  <td><fa-icon (click)="deleteSecret(item.key)" [icon]="['far', 'trash-alt']" class="cursor-pointer text-danger"></fa-icon></td>
+                </tr>
+                </tbody>
+              </table>
+
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!--Default Form End-->
+  </div>
+
+</div><!-- Content Body End -->
+
+<app-footer></app-footer>
